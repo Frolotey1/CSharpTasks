@@ -1,0 +1,5 @@
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/publish/firstProject
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/publish/firstProject.dll
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/publish/firstProject.deps.json
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/publish/firstProject.runtimeconfig.json
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/publish/firstProject.pdb
