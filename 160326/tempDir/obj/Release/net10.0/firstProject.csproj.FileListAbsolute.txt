@@ -1,0 +1,14 @@
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/firstProject
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/firstProject.deps.json
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/firstProject.runtimeconfig.json
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/firstProject.dll
+/home/fr1zb3e/project/firstProject/bin/Release/net10.0/firstProject.pdb
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.AssemblyInfoInputs.cache
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.AssemblyInfo.cs
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.dll
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/refint/firstProject.dll
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.pdb
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/firstProject.genruntimeconfig.cache
+/home/fr1zb3e/project/firstProject/obj/Release/net10.0/ref/firstProject.dll
