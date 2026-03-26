@@ -1,0 +1,14 @@
+/home/fr1zb3e/230326/bin/Debug/net8.0/230326
+/home/fr1zb3e/230326/bin/Debug/net8.0/230326.deps.json
+/home/fr1zb3e/230326/bin/Debug/net8.0/230326.runtimeconfig.json
+/home/fr1zb3e/230326/bin/Debug/net8.0/230326.dll
+/home/fr1zb3e/230326/bin/Debug/net8.0/230326.pdb
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.AssemblyInfoInputs.cache
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.AssemblyInfo.cs
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.dll
+/home/fr1zb3e/230326/obj/Debug/net8.0/refint/230326.dll
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.pdb
+/home/fr1zb3e/230326/obj/Debug/net8.0/230326.genruntimeconfig.cache
+/home/fr1zb3e/230326/obj/Debug/net8.0/ref/230326.dll
