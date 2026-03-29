@@ -1,0 +1,58 @@
+using System;
+namespace Project;
+
+public static class FirstTaskCLass {
+    public static void FirstTask() {
+	Console.WriteLine("Нажмите на клавишу для запуска первого задания");
+	Console.ReadKey();
+	
+	int N = 0, num = 0, i = 0;
+
+	while(true) {
+	    Console.WriteLine("Напишите размер N: ");
+	    N = int.Parse(Console.ReadLine());
+
+	    if(N < 0) {
+		Console.WriteLine("Массив не может быть отрицательным");
+	    } else {
+		int[] array = new int[N];
+
+		while(i < N) {
+		    Console.WriteLine("Напишите число: ");
+		    num = int.Parse(Console.ReadLine());
+		    array[i] = num;
+		    i++;
+		}
+
+		Console.WriteLine("Изначальный вид массива: ");
+		foreach(var elem in array) {
+		    Console.Write($"{elem} ");
+		}
+		Console.WriteLine("");
+
+		int writeIndexNotNull = 0;
+
+		for(int findIndex = 0; findIndex < N; ++findIndex) {
+		    if(array[findIndex] != 0) {
+			array[writeIndexNotNull] = array[findIndex];
+			writeIndexNotNull++;
+		    }
+		}
+
+		while(writeIndexNotNull < N) {
+		    array[writeIndexNotNull] = -1;
+		    writeIndexNotNull++;
+		}
+
+		Console.WriteLine("Измененный массив после удаления 0 и замены на -1");
+
+		foreach(var result in array) {
+		    Console.Write($"{result} ");
+		}
+		Console.WriteLine("");
+
+		break;
+	    }	    
+	}
+    }
+}
