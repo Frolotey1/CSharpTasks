@@ -1,0 +1,143 @@
+﻿using System;
+using Project;
+
+public class Program {
+    private Rectangle rectangle;
+    private Triangle triangle;
+    private Circle circle;
+    private FigureStorage figureStorage;
+    
+    public static void Main() {
+        Program program = new Program();
+        program.figureStorage = new FigureStorage(3);
+        
+        while (true) {
+            Console.WriteLine("1) Добавить фигуру\n2) Показать фигуры\n3) Сравнить две фигуры\n4) Посчитать стоимость материалов\n5) Выход\nВыберите опцию: ");
+            int select = int.Parse(Console.ReadLine());
+            
+            switch(select) {
+                case 1:
+                    program.Add();
+                    break;
+                case 2:
+                    program.All();
+                    break;
+                case 3:
+                    program.Compare();
+                    break;
+                case 4:
+                    program.CostMaterial();
+                    break;
+                case 5:
+                    Console.WriteLine("Завершение программы");
+                    return;
+                default:
+                    Console.WriteLine("Такой опции нет");
+                    break;
+            }
+        }
+    }
+    
+    void Add() {
+        Console.WriteLine("1) Треугольник\n2) Прямоугольник\n3) Круг\nВыберите опцию: ");
+        int select = int.Parse(Console.ReadLine());
+        
+        if(select == 1) {
+            triangle = new Triangle();
+            Console.WriteLine("Напишите А-сторону треугольника: ");
+            triangle.A = double.Parse(Console.ReadLine());
+            Console.WriteLine("Напишите B-сторону треугольника: ");
+            triangle.B = double.Parse(Console.ReadLine());
+            Console.WriteLine("Напишите C-сторону треугольника: ");
+            triangle.C = double.Parse(Console.ReadLine());
+            Console.WriteLine("Напишите имя для треугольника: ");
+            triangle.Name = Console.ReadLine();
+            Console.WriteLine("Напишите цвет для треугольника: ");
+            triangle.Color = Console.ReadLine();
+            figureStorage.AddFigure(triangle);
+        } else if(select == 2) {
+            rectangle = new Rectangle();
+            Console.Write("Напишите ширину прямоугольника: ");
+            rectangle.Width = double.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту прямоугольника: ");
+            rectangle.Height = double.Parse(Console.ReadLine());
+            Console.WriteLine("Напишите имя для прямоугольника: ");
+            rectangle.Name = Console.ReadLine();
+            Console.Write("Напишите цвет для прямоугольника: ");
+            rectangle.Color = Console.ReadLine();
+            figureStorage.AddFigure(rectangle);
+        } else if(select == 3) {
+            circle = new Circle();
+            Console.WriteLine("Напишите радиус круга: ");
+            circle.Radius = double.Parse(Console.ReadLine());
+            Console.WriteLine("Напишите имя для круга: ");
+            circle.Name = Console.ReadLine();
+            Console.WriteLine("Напишите цвет для круга: ");
+            circle.Color = Console.ReadLine();
+            figureStorage.AddFigure(circle);
+        } else {
+            Console.WriteLine("Нет такой фигуры");
+        }
+    }
+    
+    void All() {
+        foreach(var figure in figureStorage.GetAll()) {
+            if (figure != null) {
+                Console.WriteLine(figure.GetInfo());
+            }
+        }
+    }
+    
+    void Compare() {
+        Console.WriteLine("1) Треугольник\n2) Прямоугольник\n3) Круг");
+        Console.Write("Выберите первую фигуру для сравнения: ");
+        int firstSelect = int.Parse(Console.ReadLine());
+        Console.Write("Выберите вторую фигуру для сравнения: ");
+        int secondSelect = int.Parse(Console.ReadLine());
+        
+        Figure[] figures = figureStorage.GetAll();
+        
+        int firstIndex = firstSelect - 1;
+        int secondIndex = secondSelect - 1;
+        
+        if (firstIndex < 0 || firstIndex >= figures.Length || 
+            secondIndex < 0 || secondIndex >= figures.Length) {
+            Console.WriteLine("Некорректный номер фигуры");
+            return;
+        }
+        
+        Figure firstFigure = figures[firstIndex];
+        Figure secondFigure = figures[secondIndex];
+        
+        if (firstFigure == null || secondFigure == null) {
+            Console.WriteLine("Одна из фигур не существует");
+            return;
+        }
+        
+        double area1 = firstFigure.GetArea();
+        double area2 = secondFigure.GetArea();
+        
+        if (area1 < area2) {
+            Console.WriteLine("Первая фигура меньше второй по площади.");
+        } else if (area1 > area2) {
+            Console.WriteLine("Первая фигура больше второй по площади.");
+        } else {
+            Console.WriteLine("Площади фигур равны.");
+        }
+    }
+    
+    void CostMaterial() {
+        Console.Write("Введите цену за кв.м.: ");
+        double price = double.Parse(Console.ReadLine());
+        
+        foreach(var figure in figureStorage.GetAll()) {
+            if (figure != null) {
+                if (figure is ICostable costable) {
+                    Console.WriteLine($"Стоимость {figure.Name}: {costable.CalculateMaterialCost(price)}");
+                } else {
+                    Console.WriteLine($"Фигура {figure.Name} не поддерживает расчет стоимости");
+                }
+            }
+        }
+    }
+}
