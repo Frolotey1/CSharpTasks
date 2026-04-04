@@ -1,0 +1,28 @@
+namespace AllLands;
+namespace AllLands.Deutschland {
+    public class Berlin {
+        public uint Population {get;set;}
+        public string BundesKanzler {get; set;}
+	public string Data() {
+	    return string.Format("Страна: Германия | Столица: Берлин | Федеральный канцлер: {} | Население: {}",BundesKanzler,Population);
+	}
+    }   
+}
+namespace AllLands.Osterreich {
+    public class Wien {
+        public uint Population {get;set;}
+	public string BundesKanzler {get;set;}
+	public string Data() {
+	    return string.Format("Страна: Австрия | Столица: Вена | Федеральный канцлер: {} | Население: {}",BundesKanzler,Population);
+	}
+    }
+}
+namespace AllLands.Schweiz {
+    public class Biern {
+        public uint Population {get;set;}
+	public string BundesKanzler {get;set;}
+	public string Data() {
+	    return string.Format("Страна: Швейцария | Столица: Берн | Федеральный канцлер: {} | Население: {}",BundesKanzler,Population);
+	}
+    }
+} 

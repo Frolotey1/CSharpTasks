@@ -1,0 +1,62 @@
+namespace Shop;
+using System;
+
+public struct Article {
+      public uint code;
+      public string name;
+      public decimal price;
+      public ArticleType type;
+
+      private string Name {
+	  get {return name;}
+	  set {name = value;}
+      }
+      private uint Code {
+	  get {return code;}
+	  set {code = value;}
+      }
+      private decimal Price {
+	  get {return price;}
+	  set {price = value;}
+      }
+      private ArticleType Type {
+	  get {return type;}
+	  set {type = value;}
+      }
+        
+      public void Run() {
+	  Console.Write("Введите название товара: ");
+	  Name = Console.ReadLine();
+	  Console.Write("Введите код товара: ");
+	  Code = uint.Parse(Console.ReadLine());
+	  Console.Write("Введите цену за товар: ");
+	  Price = decimal.Parse(Console.ReadLine());
+	  ArticleType[] types = new ArticleType[6]{
+	      ArticleType.Electronics,
+	      ArticleType.Clothing,
+	      ArticleType.Food,
+	      ArticleType.Books,
+	      ArticleType.Furniture,
+	      ArticleType.Other
+	  };
+
+	  Console.Write("1) Электроника\n2) Одежда\n3) Еда\n4) Книги\n5) Мебель\n6) Другое\nВыберите тип товара: ");
+	  int selectType = int.Parse(Console.ReadLine());
+
+	  switch(selectType) {
+	      case int s when s >= 1 && s <= 6:
+		  Type = types[s - 1];
+		  break;
+	      default:
+		  Console.WriteLine("Такой тип товаров не существует");
+		  break;		    
+	  }
+
+	  if(Type == null) {
+	      Console.WriteLine("Невозможно вывести информацию о товаре без его категории");
+	      return;
+	  }
+
+	  Console.WriteLine($"Название: {Name} | Код: {Code} | Цена: {Price} | Тип: {Type}");
+     }
+}

@@ -1,0 +1,9 @@
+namespace Shop;
+
+public enum ClientType {
+     Regular,
+     Silver,
+     Gold,
+     Platinum,
+     VIP
+}

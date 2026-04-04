@@ -1,0 +1,14 @@
+/home/fr1zb3e/230326 - Структуры,классы,OOП/bin/Debug/net8.0/230326 - Структуры,классы,OOП
+/home/fr1zb3e/230326 - Структуры,классы,OOП/bin/Debug/net8.0/230326 - Структуры,классы,OOП.deps.json
+/home/fr1zb3e/230326 - Структуры,классы,OOП/bin/Debug/net8.0/230326 - Структуры,классы,OOП.runtimeconfig.json
+/home/fr1zb3e/230326 - Структуры,классы,OOП/bin/Debug/net8.0/230326 - Структуры,классы,OOП.dll
+/home/fr1zb3e/230326 - Структуры,классы,OOП/bin/Debug/net8.0/230326 - Структуры,классы,OOП.pdb
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.AssemblyInfoInputs.cache
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.AssemblyInfo.cs
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.dll
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/refint/230326 - Структуры,классы,OOП.dll
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.pdb
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/230326 - Структуры,классы,OOП.genruntimeconfig.cache
+/home/fr1zb3e/230326 - Структуры,классы,OOП/obj/Debug/net8.0/ref/230326 - Структуры,классы,OOП.dll
