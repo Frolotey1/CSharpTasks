@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using Project;
+
+public class Program {
+    public static void Main() {
+        Console.WriteLine("Нажмите на клавишу для запуска программы");
+        Console.ReadKey();
+
+        Console.Write("1) Коэффициенты\n2) Комплексные числа\n3) Дробь\nВыберите опцию: ");
+        int selectOption = int.Parse(Console.ReadLine());
+
+        switch (selectOption) {
+            case 1:
+                FirstTask();
+                break;
+            case 2:
+                SecondTask();
+                break;
+            case 3:
+                ThirdTask();
+                break;
+            default:
+                Console.WriteLine("Нет такой опции");
+                break;
+        }
+    }
+    
+    public static void FirstTask(uint attempt = 1) {
+        Console.WriteLine("Нажмите на клавишу для запуска первого задания: ");
+        Console.ReadKey();
+        
+        if (attempt > 2) {
+            Console.WriteLine("Закончились попытки работы с выражениями.");
+            return;
+        }
+        
+        Odds odds = new Odds();
+        
+        Console.Write("Введите коэффициенты A и B: ");
+        string AandB = Console.ReadLine();
+        odds.Parse(AandB);
+        
+        var (E1, E2) = odds.Expression();
+        
+        if (E1 == 0 && E2 == 0) {
+            Console.WriteLine("Выражение 'A * X + B * Y = 0' для E1 и E2 нулевое. Выражение истинное.");
+        } else if (E1 != 0) {
+            Console.WriteLine("Выражение 'A * X + B * Y = 0' для E1 не нулевое");
+        } else {
+            Console.WriteLine("Выражение 'A * X + B * Y = 0' для E2 не нулевое");
+        }
+        
+        Console.WriteLine("Если хотите еще 1 раз поработать с выражениями - напишите 1. Иначе любое число для выхода в опции: ");
+        int continueOrNot = int.Parse(Console.ReadLine());
+
+        if (continueOrNot == 1) {
+            attempt++;
+            FirstTask(attempt);
+        }
+	Main();
+    }
+    
+    public static void SecondTask() {
+        Console.WriteLine("Нажмите на клавишу для запуска второго задания: ");
+        Console.ReadKey();
+
+        Console.Write("Введите число X: ");
+        double X = double.Parse(Console.ReadLine());
+        Console.Write("Введите число Y: ");
+        double Y = double.Parse(Console.ReadLine());
+
+        Complex z = new Complex(X, Y);
+        Complex z1;
+        z1 = z - (z * z * z - 1) / (3 * z * z);
+        Console.WriteLine($"z1 = {z1}");
+	Main();
+    }
+    
+    public static void ThirdTask() {
+        Console.WriteLine("Нажмите на клавишу для запуска третьего задания: ");
+        Console.ReadKey();
+
+        Fraction f = new Fraction(3, 4);
+        int a = 10;
+        Fraction f1 = f * a;
+        Console.WriteLine($"f1 = {f1}");
+        
+        Fraction f2 = a * f;
+        Console.WriteLine($"f2 = {f2}");
+        
+        double d = 1.5;
+        Fraction f3 = f + d;
+        Console.WriteLine($"f3 = {f3}");
+	Main();
+    }
+}

@@ -1,0 +1,37 @@
+namespace Project;
+using System;
+using System.Collections.Generic;
+
+public struct Odds {
+    private static int A {get; set;}
+    private static int B {get; set;}
+    public static void Parse(string getOdds) {
+	if(getOdds.Length == 0) {
+	    Console.WriteLine("Строка пустая");
+	} else {
+	    string[] tokens = getOdds.Split(' ');
+	    if(tokens.Length < 2 || tokens.Length > 2) {
+		Console.WriteLine("Нужно ввести 2 коэффициента, не больше и не меньше");
+	    } else {
+		A = int.Parse(tokens[0]);
+		B = int.Parse(tokens[1]);
+	    }
+	}
+    }
+    public Dictionary<int,int> Expression() {
+	Dictionary<int,int> keyAndValue = new Dictionary<int,int>();
+	int X = 0, Y = 0, repeate = 0, E = 0;
+	int[] E1andE2 = new int[2];
+	while(repeate < 2) {
+	    Console.Write("Введите значение X: ");
+	    X = int.Parse(Console.ReadLine());
+	    Console.Write("Введите значение Y: ");
+	    Y = int.Parse(Console.ReadLine());
+	    E = A * X + B * Y;
+	    E1andE2[repeate] = E;
+	    repeate++;
+	}
+	keyAndValue[E1andE2[0]] = E1andE2[1];
+	return keyAndValue;
+    }
+}

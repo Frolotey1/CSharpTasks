@@ -1,0 +1,38 @@
+namespace Project;
+using System;
+
+public class Complex {
+    public double X { get; set; }  
+    public double Y { get; set; }     
+    public Complex(double x, double y) {
+        X = x;
+        Y = y;
+    }
+    public Complex(Complex other) {
+	this.X = other.X;
+	this.Y = other.Y;
+    }   
+    public static Complex operator +(Complex a, Complex b) {
+        return new Complex(a.X + b.X, a.Y + b.Y);
+    }   
+    public static Complex operator -(Complex a, Complex b) {
+        return new Complex(a.X - b.X, a.Y - b.Y);
+    }    
+    public static Complex operator *(Complex a, Complex b) {
+        double x = a.X * b.X - a.Y * b.Y;
+        double y = a.X * b.Y + a.Y * b.X;
+        return new Complex(x, y);
+    }   
+    public static Complex operator /(Complex a, Complex b) {
+        double den = b.X * b.X + b.Y * b.Y;
+        double x = (a.X * b.X + a.Y * b.Y) / den;
+        double y = (a.Y * b.X - a.X * b.Y) / den;
+        return new Complex(x, y);
+    }    
+    public static implicit operator Complex(double d) {
+        return new Complex(d, 0);
+    }    
+    public override string ToString() {
+        return $"{X} + {Y}i";
+    }
+}

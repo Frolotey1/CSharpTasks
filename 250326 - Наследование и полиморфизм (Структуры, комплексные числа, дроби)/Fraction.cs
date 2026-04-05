@@ -1,0 +1,72 @@
+namespace Project;
+using System;
+
+public class Fraction {
+    public int Numerator { get; private set; }
+    public int Denominator { get; private set; }
+    
+    public Fraction(int numerator, int denominator) {
+        Numerator = numerator;
+        Denominator = denominator;
+    }
+    
+    public static implicit operator Fraction(int n) {
+        return new Fraction(n, 1);
+    }
+    
+    public static implicit operator Fraction(double d){
+	int num = (int)(d * 1000);
+	return new Fraction(num, 1000);
+    }    
+    public static implicit operator double(Fraction f) {
+        return (double)f.Numerator / f.Denominator;
+    }
+    
+    public static Fraction operator +(Fraction a, Fraction b) {
+        int numerator = a.Numerator * b.Denominator + b.Numerator * a.Denominator;
+        int denominator = a.Denominator * b.Denominator;
+        return new Fraction(numerator, denominator);
+    }
+    
+    public static Fraction operator -(Fraction a, Fraction b) {
+        int numerator = a.Numerator * b.Denominator - b.Numerator * a.Denominator;
+        int denominator = a.Denominator * b.Denominator;
+        return new Fraction(numerator, denominator);
+    }
+    
+    public static Fraction operator *(Fraction a, Fraction b) {
+        return new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+    }
+    
+    public static Fraction operator /(Fraction a, Fraction b) {
+        return new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+    }
+    
+    public static bool operator ==(Fraction a, Fraction b) {
+        return a.Numerator * b.Denominator == b.Numerator * a.Denominator;
+    }
+    
+    public static bool operator !=(Fraction a, Fraction b) {
+        return a.Numerator * b.Denominator != b.Numerator * a.Denominator;
+    }
+    
+    public static bool operator <(Fraction a, Fraction b) {
+        return a.Numerator * b.Denominator < b.Numerator * a.Denominator;
+    }
+    
+    public static bool operator >(Fraction a, Fraction b) {
+        return a.Numerator * b.Denominator > b.Numerator * a.Denominator;
+    }
+    
+    public static bool operator true(Fraction f) {
+        return Math.Abs(f.Numerator) < Math.Abs(f.Denominator);
+    }
+    
+    public static bool operator false(Fraction f) {
+        return Math.Abs(f.Numerator) > Math.Abs(f.Denominator);
+    }
+    
+    public override bool Equals(object obj) {
+        return obj is Fraction f && this == f;
+    }
+}
