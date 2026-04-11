@@ -1,0 +1,14 @@
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.AssemblyInfoInputs.cache
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.AssemblyInfo.cs
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/050526 - Коллекции/bin/Debug/net8.0/050526 - Коллекции
+/home/fr1zb3e/050526 - Коллекции/bin/Debug/net8.0/050526 - Коллекции.deps.json
+/home/fr1zb3e/050526 - Коллекции/bin/Debug/net8.0/050526 - Коллекции.runtimeconfig.json
+/home/fr1zb3e/050526 - Коллекции/bin/Debug/net8.0/050526 - Коллекции.dll
+/home/fr1zb3e/050526 - Коллекции/bin/Debug/net8.0/050526 - Коллекции.pdb
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.dll
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/refint/050526 - Коллекции.dll
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.pdb
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/050526 - Коллекции.genruntimeconfig.cache
+/home/fr1zb3e/050526 - Коллекции/obj/Debug/net8.0/ref/050526 - Коллекции.dll
