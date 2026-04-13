@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _230326___Структуры_классы_ООП
 {
     public class MethodBook
     {
-        // Все поля приватные
         private string title;
         private string author;
         private string publisher;
