@@ -1,0 +1,18 @@
+namespace Project;
+using System;
+
+public class PublicTransport {
+    protected string Number;
+    protected int Capacity;
+    protected double CurrentSpeed;
+
+    public PublicTransport(string number, int capacity, double currentSpeed) {
+        Number = number;
+        Capacity = capacity;
+        CurrentSpeed = currentSpeed;
+    }
+
+    public virtual string GetInfo() {
+        return $"Номер: {Number}, Вместимость: {Capacity} чел., Текущая скорость: {CurrentSpeed} км/ч";
+    }
+}

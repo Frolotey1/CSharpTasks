@@ -1,0 +1,14 @@
+namespace Project;
+using System;
+
+public class Human {
+    private string Name {get; set;}
+    private uint Age {get; set;}
+    public Human(string getName, uint getAge) {
+	Name = getName;
+	Age = getAge;
+    }
+    public string info() {
+	return string.Format("Имя: {0} | Возраст: {1}",Name,Age);
+    }
+}

@@ -1,0 +1,714 @@
+namespace Project;
+
+using System;
+
+public class EightFigures {
+    public static void Run() {
+        Square square = new Square();
+        Rectangle rectangle = new Rectangle();
+        Triangle triangle = new Triangle();
+        Rhombus rhombus = new Rhombus();
+        Parallelogram parallelogram = new Parallelogram();
+        Circle circle = new Circle();
+        Trapezoid trapezoid = new Trapezoid();
+        Ellipse ellipse = new Ellipse();
+	ConstructorShape constructorShape = new ConstructorShape();
+
+        Console.Write("1) Квадрат\n2) Прямоугольник\n3) Треугольник\n4) Ромб\n5) Параллелограмм\n6) Круг\n7) Трапеция\n8) Эллипс\n9) Составная фигура\n10) Выход из программы\nВыберите фигуру: ");
+        int select = int.Parse(Console.ReadLine());
+
+        switch(select) {
+            case 1:
+                square.Run();
+                break;
+            case 2:
+                rectangle.Run();
+                break;
+            case 3:
+                triangle.Run();
+                break;
+            case 4:
+                rhombus.Run();
+                break;
+            case 5:
+                parallelogram.Run();
+                break;
+            case 6:
+                circle.Run();
+                break;
+            case 7:
+                trapezoid.Run();
+                break;
+            case 8:
+                ellipse.Run();
+                break;
+	    case 9:
+		constructorShape.Run();
+		break;
+            case 10:
+                Console.WriteLine("Завершение программы");
+                Environment.Exit(0);
+                break;
+            default:
+                Console.WriteLine("Такая фигура не существует");
+                break;	      
+        }
+    }
+    
+    public abstract class GeometricShape {
+        public abstract void Area();
+        public abstract void Perimeter();
+    }
+    
+    public class Square : GeometricShape {
+        private uint side;
+        private uint repeateOperation = 1;
+        
+        public Square() {
+            this.side = 0;
+        }
+        
+        public uint Side {
+            get {return side;}
+            set {side = value;}
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public override void Area() {
+            Console.WriteLine($"{Side} * {Side} = {Side * Side}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"4 * {Side} = {4 * Side}");
+        }
+        
+        public void Run() {
+            Console.Write("Введите сторону квадрата: ");
+            Side = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь квадрата\n2) Периметр квадрата\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с квадратом. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+        
+        public uint GetArea() {
+            return Side * Side;
+        }
+        
+        public uint GetPerimeter() {
+            return Side * 4;
+        }
+    }
+    
+    public class Rectangle : GeometricShape {
+        private uint firstSide;
+        private uint secondSide;
+        private uint repeateOperation = 1;
+        
+        public Rectangle() {
+            this.firstSide = 0;
+            this.secondSide = 0;
+        }
+        
+        public uint FirstSide {
+            get {return firstSide;}
+            set {firstSide = value;}
+        }
+        
+        public uint SecondSide {
+            get {return secondSide;}
+            set {secondSide = value;}
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public override void Area() {
+            Console.WriteLine($"{FirstSide} * {SecondSide} = {FirstSide * SecondSide}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"2 * ({FirstSide} + {SecondSide}) = {2 * (FirstSide + SecondSide)}");
+        }
+        
+        public void Run() {
+            Console.Write("Напишите ширину прямоугольника: ");
+            FirstSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту прямоугольника: ");
+            SecondSide = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь прямоугольника\n2) Периметр прямоугольника\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с прямоугольником. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Triangle : GeometricShape {
+        private uint firstSide;
+        private uint secondSide;
+        private uint thirdSide;
+        private uint height;
+        private uint repeateOperation = 1;
+        
+        public Triangle() {
+            this.firstSide = 0;
+            this.secondSide = 0;
+            this.thirdSide = 0;
+            this.height = 0;
+        }
+        
+        public uint FirstSide {
+            get {return firstSide;}
+            set {firstSide = value;}
+        }
+        
+        public uint SecondSide {
+            get {return secondSide;}
+            set {secondSide = value;}
+        }
+        
+        public uint ThirdSide {
+            get {return thirdSide;}
+            set {thirdSide = value;}
+        }
+        
+        public uint Height {
+            get {return height;}
+            set {height = value;}
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public override void Area() {
+            Console.WriteLine($"({FirstSide} * {Height}) / 2 = {(FirstSide * Height) / 2}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"{FirstSide} + {SecondSide} + {ThirdSide} = {FirstSide + SecondSide + ThirdSide}");
+        }
+        
+        public void Run() {
+            Console.Write("Введите первую сторону треугольника: ");
+            FirstSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите вторую сторону треугольника: ");
+            SecondSide = uint.Parse(Console.ReadLine());
+            Console.Write("Введите третью сторону треугольника: ");
+            ThirdSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту треугольника (к первой стороне): ");
+            Height = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь треугольника\n2) Периметр треугольника\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с треугольником. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Rhombus : GeometricShape {
+        private uint side;
+        private uint height;
+        private uint repeateOperation = 1;
+        
+        public Rhombus() {
+            this.side = 0;
+            this.height = 0;
+        }
+        
+        public uint Side {
+            get {return side;}
+            set {side = value;}
+        }
+        
+        public uint Height {
+            get {return height;}
+            set {height = value;}
+        }
+        
+        public override void Area() {
+            Console.WriteLine($"{Side} * {Height} = {Side * Height}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"4 * {Side} = {4 * Side}");
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public void Run() {
+            Console.Write("Напишите сторону ромба: ");
+            Side = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту ромба: ");
+            Height = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь ромба\n2) Периметр ромба\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с ромбом. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Parallelogram : GeometricShape {
+        private uint firstSide;
+        private uint secondSide;
+        private uint height;
+        private uint repeateOperation = 1;
+        
+        public Parallelogram() {
+            this.firstSide = 0;
+            this.secondSide = 0;
+            this.height = 0;
+        }
+        
+        public uint FirstSide {
+            get {return firstSide;}
+            set {firstSide = value;}
+        }
+        
+        public uint SecondSide {
+            get {return secondSide;}
+            set {secondSide = value;}
+        }
+        
+        public uint Height {
+            get {return height;}
+            set {height = value;}
+        }
+        
+        public override void Area() {
+            Console.WriteLine($"{FirstSide} * {Height} = {FirstSide * Height}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"2 * ({FirstSide} + {SecondSide}) = {2 * (FirstSide + SecondSide)}");
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public void Run() {
+            Console.Write("Напишите первую сторону параллелограмма: ");
+            FirstSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите вторую сторону параллелограмма: ");
+            SecondSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту параллелограмма: ");
+            Height = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь параллелограмма\n2) Периметр параллелограмма\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с параллелограммом. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Circle : GeometricShape {
+        private double radius;
+        private uint repeateOperation = 1;
+        
+        public Circle() {
+            this.radius = 0.0;
+        }
+        
+        public double Radius {
+            get {return radius;}
+            set {radius = value;}
+        }
+        
+        public override void Area() {
+            double P = Math.PI;
+            Console.WriteLine($"{P:F2} * {radius}^2 = {P * radius * radius:F2}");
+        }
+        
+        public override void Perimeter() {
+            double P = Math.PI;
+            Console.WriteLine($"2 * {P:F2} * {radius} = {2 * P * radius:F2}");
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public void Run() {
+            Console.Write("Напишите радиус круга: ");
+            Radius = double.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь круга\n2) Длина окружности\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с кругом. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Trapezoid : GeometricShape {
+        private uint firstBase;
+        private uint secondBase;
+        private uint leftSide;
+        private uint rightSide;
+        private uint height;
+        private uint repeateOperation = 1;
+        
+        public Trapezoid() {
+            this.firstBase = 0;
+            this.secondBase = 0;
+            this.leftSide = 0;
+            this.rightSide = 0;
+            this.height = 0;
+        }
+        
+        public uint FirstBase {
+            get {return firstBase;}
+            set {firstBase = value;}
+        }
+        
+        public uint SecondBase {
+            get {return secondBase;}
+            set {secondBase = value;}
+        }
+        
+        public uint LeftSide {
+            get {return leftSide;}
+            set {leftSide = value;}
+        }
+        
+        public uint RightSide {
+            get {return rightSide;}
+            set {rightSide = value;}
+        }
+        
+        public uint Height {
+            get {return height;}
+            set {height = value;}
+        }
+        
+        public override void Area() {
+            double decision = ((double)(FirstBase + SecondBase) / 2) * Height;
+            Console.WriteLine($"({FirstBase} + {SecondBase}) / 2 * {Height} = {decision:F2}");
+        }
+        
+        public override void Perimeter() {
+            Console.WriteLine($"{FirstBase} + {SecondBase} + {LeftSide} + {RightSide} = {FirstBase + SecondBase + LeftSide + RightSide}");
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public void Run() {
+            Console.Write("Напишите первое основание трапеции: ");
+            FirstBase = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите второе основание трапеции: ");
+            SecondBase = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите левую сторону трапеции: ");
+            LeftSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите правую сторону трапеции: ");
+            RightSide = uint.Parse(Console.ReadLine());
+            Console.Write("Напишите высоту трапеции: ");
+            Height = uint.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь трапеции\n2) Периметр трапеции\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с трапецией. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    
+    public class Ellipse : GeometricShape {
+        private double semiMajorAxis; 
+        private double semiMinorAxis; 
+        private uint repeateOperation = 1;
+        
+        public Ellipse() {
+            this.semiMajorAxis = 0;
+            this.semiMinorAxis = 0;
+        }
+        
+        public double SemiMajorAxis {
+            get {return semiMajorAxis;}
+            set {semiMajorAxis = value;}
+        }
+        
+        public double SemiMinorAxis {
+            get {return semiMinorAxis;}
+            set {semiMinorAxis = value;}
+        }
+        
+        private void IndexRepeateOperation() {
+            repeateOperation++;
+        }
+        
+        public override void Area() {
+            double P = Math.PI;
+            Console.WriteLine($"{P} * {semiMajorAxis} * {semiMinorAxis} = {P * semiMajorAxis * semiMinorAxis:F2}");
+        }
+        
+        public override void Perimeter() {
+            double a = semiMajorAxis;
+            double b = semiMinorAxis;
+            double h = Math.Pow((a - b), 2) / Math.Pow((a + b), 2);
+            double perimeter = Math.PI * (a + b) * (1 + (3 * h) / (10 + Math.Sqrt(4 - 3 * h)));
+            Console.WriteLine($"Приближенный периметр эллипса: {perimeter:F2}");
+        }
+        
+        public void Run() {
+            Console.Write("Напишите большую полуось эллипса: ");
+            SemiMajorAxis = double.Parse(Console.ReadLine());
+            Console.Write("Напишите малую полуось эллипса: ");
+            SemiMinorAxis = double.Parse(Console.ReadLine());
+
+            Console.Write("1) Площадь эллипса\n2) Периметр эллипса\nВыберите операцию: ");
+            int select = int.Parse(Console.ReadLine());
+
+            switch(select) {
+                case 1:
+                    Area();
+                    break;
+                case 2:
+                    Perimeter();
+                    break;
+                default:
+                    Console.WriteLine("Такая операция не существует");
+                    break;
+            }
+
+            Console.WriteLine("Напишите 1, чтобы продолжить работу с фигурами еще один раз. Для завершения программы напишите любое число: ");
+            int continueOrNot = int.Parse(Console.ReadLine());
+
+            if(continueOrNot == 1) {
+                if(repeateOperation >= 2) {
+                    Console.WriteLine("Превышено более двух попыток при работе с эллипсом. Завершение программы");
+                    Environment.Exit(0);
+                } else {
+                    IndexRepeateOperation();
+                    Run();
+                }
+            } else
+                Console.WriteLine("Завершение программы");
+        }
+    }
+    public class ConstructorShape : Square {
+    private uint multiplier;
+    
+    public ConstructorShape() {
+        multiplier = 1;
+    }
+    
+    public uint Multiplier {
+        get { return multiplier; }
+        set { multiplier = value; }
+    }
+    
+    public new void Area() {
+        uint area = GetArea();
+        uint totalArea = area * multiplier + Side;
+        Console.WriteLine($"{Side} + {area} * {multiplier} = {totalArea}");
+    }
+    
+    public new void Perimeter() {
+        uint perimeter = GetPerimeter();
+        uint totalPerimeter = Side * perimeter * multiplier;
+        Console.WriteLine($"{perimeter} + {perimeter} = {totalPerimeter}");
+    }
+    
+    public void Run() {
+        Console.Write("Введите сторону квадрата: ");
+        Side = uint.Parse(Console.ReadLine());
+        
+        Console.Write("Введите количество квадратов (множитель): ");
+        Multiplier = uint.Parse(Console.ReadLine());
+
+        Console.Write("1) Площадь составной фигуры\n2) Периметр составной фигуры\nВыберите операцию: ");
+        int select = int.Parse(Console.ReadLine());
+
+        switch(select) {
+            case 1:
+                Area();
+                break;
+            case 2:
+                Perimeter();
+                break;
+            default:
+                Console.WriteLine("Такая операция не существует");
+                break;
+        }
+        Console.WriteLine("Завершение программы");
+    }
+}
+}

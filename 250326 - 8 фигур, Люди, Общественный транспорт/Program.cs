@@ -1,0 +1,55 @@
+﻿using System;
+using Project;
+
+public class Program {
+    public static void Main() {
+	Student student = new Student();
+	Teacher teacher = new Teacher();
+	Console.Write("1) 8 фигур\n2) Студент и преподаватель\n3) Общественный транспорт\n4) Выход\nВыберите опцию: ");
+	uint selectOption = uint.Parse(Console.ReadLine());
+
+	switch(selectOption) {
+	    case 1:
+		EightFigures.Run();
+		break;
+	    case 2:
+		Console.Write("1) Студент\n2) Преподаватель\nВыберите тип: ");
+		uint selectType = uint.Parse(Console.ReadLine());
+
+		switch(selectType) {
+		    case 1:
+			student.Run();
+			break;
+		    case 2:
+			teacher.Run();
+			break;
+		    default:
+			Console.WriteLine("Такой тип человека не существует");
+			break;
+		}
+		break;
+	    case 3:
+	        Console.Write("1) Автобус\n2) Троллейбус\nВыберите тип: ");
+		uint selectOtherType = uint.Parse(Console.ReadLine());
+
+		switch(selectOtherType) {
+		    case 1:
+		        Bus.Run();
+			break;
+		    case 2:
+		        Trolleybus.Run();
+			break;
+		    default:
+			Console.WriteLine("Такой тип транспорта не существует");
+			break;
+		}
+		break;
+	    case 4:
+		Console.WriteLine("Завершение программы");
+		break;
+	    default:
+		Console.WriteLine("Такая опция не существует");
+		break;
+	}
+    }
+}

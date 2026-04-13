@@ -1,0 +1,23 @@
+namespace Project;
+using System;
+
+public class Teacher : Human {
+    private uint Experience {get; set;}
+    private uint Qualification {get; set;}
+    public void Run() {
+	Console.Write("Введите имя человека: ");
+	Name = Console.ReadLine();
+	Console.Write("Введите возраст человека: ");
+	Age = uint.Parse(Console.ReadLine());
+	Console.Write("Введите стаж работы: ");
+	Experience = uint.Parse(Console.ReadLine());
+	Console.Write("Введите уровень квалификации: ");
+	Qualification = uint.Parse(Console.ReadLine());
+
+	Console.Write($"Имя и возраст: {info()}\nСтаж: {Experience}\nУровень квалификации: {Qualification}\nЗарплата: {Salary()}");	
+    }
+    private string Salary() {
+	uint salary = 27093 + (Experience * 500) + (Qualification * 900);
+	return string.Format("МРОТ + (Стаж * 500) + (Уровень квалификации * 900) = 27093 + ({0} * 500) + ({1} * 900) = {2} рублей",Experience,Qualification,salary);
+    }
+}
