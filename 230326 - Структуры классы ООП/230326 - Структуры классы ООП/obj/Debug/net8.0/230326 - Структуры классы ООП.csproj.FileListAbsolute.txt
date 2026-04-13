@@ -1,0 +1,14 @@
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\bin\Debug\net8.0\230326 - Структуры классы ООП.exe
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\bin\Debug\net8.0\230326 - Структуры классы ООП.deps.json
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\bin\Debug\net8.0\230326 - Структуры классы ООП.runtimeconfig.json
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\bin\Debug\net8.0\230326 - Структуры классы ООП.dll
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\bin\Debug\net8.0\230326 - Структуры классы ООП.pdb
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.AssemblyInfoInputs.cache
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.AssemblyInfo.cs
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.csproj.CoreCompileInputs.cache
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.dll
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\refint\230326 - Структуры классы ООП.dll
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.pdb
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\230326 - Структуры классы ООП.genruntimeconfig.cache
+C:\Users\Top\source\repos\230326 - Структуры классы ООП\230326 - Структуры классы ООП\obj\Debug\net8.0\ref\230326 - Структуры классы ООП.dll
