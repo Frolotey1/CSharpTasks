@@ -1,9 +1,0 @@
-namespace Shop;
-
-public enum PayType {
-      Cash,
-      Card,
-      Credit,
-      Installment,
-      Online
-}
