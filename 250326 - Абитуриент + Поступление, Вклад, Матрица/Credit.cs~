@@ -1,0 +1,47 @@
+namespace Project;
+using System;
+using System.Globalization;
+
+public class Credit {
+    private string FullName {get; set;}
+    private double Amount {get; set;}
+    private static double InterestRate {get; set;}
+    public Credit(string fullName, double amount, double interestRate) {
+        FullName = fullName;
+        Amount = amount;
+	InterestRate = interestRate;
+    }
+    public static Credit operator -(Credit c, double payment) {
+        c.Amount -= payment;
+        if (c.Amount < 0) c.Amount = 0;
+        return c;
+    }
+    public static double GetInterestRate() {
+        return InterestRate;
+    }
+    public void Show() {
+        Console.WriteLine($"Заёмщик: {FullName}, Остаток кредита: {Amount} руб., Процентная ставка: {InterestRate}%");
+    }
+    public static void Run() {
+        Console.Write("Введите ФИО заёмщика: ");
+        string fullName = Console.ReadLine();
+        Console.Write("Введите сумму кредита (руб): ");
+        double amount = double.Parse(Console.ReadLine(),CulturInfo.InvariantCulture);
+	Console.Write("Введите процентную ставку: ");
+	double interestRate = double.Parse(Console.ReadLine(),CulturInfo.InvariantCulture);
+        Credit credit = new Credit(fullName, amount, interestRate);
+
+        Console.WriteLine("До платежа:");
+        credit.Show();
+
+        Console.Write("Введите сумму платежа: ");
+        double payment = double.Parse(Console.ReadLine());
+
+        credit = credit - payment;
+
+        Console.WriteLine("После платежа:");
+        credit.Show();
+
+        Console.WriteLine($"Процентная ставка (статический метод): {Credit.GetInterestRate()}%");
+    }
+}
