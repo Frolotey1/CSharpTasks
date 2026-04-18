@@ -1,0 +1,28 @@
+﻿using System;
+using System.Globalization;
+using Project;
+
+public class Program {
+    public static void Main() {
+	Console.Write("1) Цельсий в Фаргенгейт/Кельвин\n2) Зарплата\n3) Клиент антикафе\n4) Выход\nВыберите опцию: ");
+	int selectOption = int.Parse(Console.ReadLine());
+	
+	switch(selectOption) {
+	    case 1:
+		Converter.Run();
+		break;
+	    case 2:
+		Salary.Run();
+		break;
+	    case 3:
+		AntiCoffee.Run();
+		break;
+	    case 4:
+		Console.WriteLine("Завершение программы");
+		break;
+	    default:
+		Console.WriteLine("Нет такой опции");
+		break;
+	}
+    }
+}

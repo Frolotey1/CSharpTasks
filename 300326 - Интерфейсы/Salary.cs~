@@ -1,0 +1,91 @@
+namespace Project;
+using System;
+
+
+public interface ISalary {
+    string FullName { get; set; }   
+    int WorkingDays { get; set; }     
+    double CalculateSalary();      
+}
+
+public interface IConsoleOutput {
+    void Print(); 
+}
+
+public class Manager : ISalary, IConsoleOutput {
+    public string FullName { get; set; }
+    public int WorkingDays { get; set; }
+
+    public Manager(string fullName, int workingDays) {
+        FullName = fullName;
+        WorkingDays = workingDays;
+    }
+
+    public double CalculateSalary() {
+        return WorkingDays * 1000;
+    }
+
+    public void Print() {
+        Console.WriteLine($"Менеджер");
+        Console.WriteLine($"ФИО: {FullName}");
+        Console.WriteLine($"Рабочих дней: {WorkingDays}");
+        Console.WriteLine($"Зарплата: {CalculateSalary()} руб.");
+    }
+}
+
+public class DepartmentHead : ISalary, IConsoleOutput {
+    public string FullName { get; set; }
+    public int WorkingDays { get; set; }
+
+    public DepartmentHead(string fullName, int workingDays) {
+        FullName = fullName;
+        WorkingDays = workingDays;
+    }
+    public double CalculateSalary() {
+        return WorkingDays * 2500;
+    }
+    public void Print() {
+        Console.WriteLine($"Глава отдела");
+        Console.WriteLine($"ФИО: {FullName}");
+        Console.WriteLine($"Рабочих дней: {WorkingDays}");
+        Console.WriteLine($"Зарплата: {CalculateSalary()} руб.");
+    }
+}
+
+public class Accounting {
+    public static double CalculateIncomeTax(ISalary employee, int days) {
+        employee.WorkingDays = days;
+        double salary = employee.CalculateSalary();
+        return salary * 0.13;
+    }
+}
+
+public class Salary {
+    public static void Run() {
+	 Console.WriteLine("Менеджер");
+        Console.Write("Введите ФИО менеджера: ");
+        string managerName = Console.ReadLine();
+        Console.Write("Введите количество рабочих дней: ");
+        int managerDays = int.Parse(Console.ReadLine());
+
+        Manager manager = new Manager(managerName, managerDays);
+        manager.Print();
+
+        double managerTax = Accounting.CalculateIncomeTax(manager, managerDays);
+        Console.WriteLine($"Подоходный налог (13%): {managerTax} руб.");
+        Console.WriteLine($"К выдаче на руки: {manager.CalculateSalary() - managerTax} руб.");
+
+        Console.WriteLine("Глава отдела");
+        Console.Write("Введите ФИО главы отдела: ");
+        string headName = Console.ReadLine();
+        Console.Write("Введите количество рабочих дней: ");
+        int headDays = int.Parse(Console.ReadLine());
+
+        DepartmentHead head = new DepartmentHead(headName, headDays);
+        head.Print();
+
+        double headTax = Accounting.CalculateIncomeTax(head, headDays);
+        Console.WriteLine($"Подоходный налог (13%): {headTax} руб.");
+        Console.WriteLine($"К выдаче на руки: {head.CalculateSalary() - headTax} руб.");
+    }
+}

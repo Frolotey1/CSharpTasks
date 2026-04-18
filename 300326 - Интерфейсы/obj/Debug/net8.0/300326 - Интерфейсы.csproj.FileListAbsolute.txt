@@ -1,0 +1,14 @@
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.AssemblyInfoInputs.cache
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.AssemblyInfo.cs
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/300326 - Интерфейсы/bin/Debug/net8.0/300326 - Интерфейсы
+/home/fr1zb3e/300326 - Интерфейсы/bin/Debug/net8.0/300326 - Интерфейсы.deps.json
+/home/fr1zb3e/300326 - Интерфейсы/bin/Debug/net8.0/300326 - Интерфейсы.runtimeconfig.json
+/home/fr1zb3e/300326 - Интерфейсы/bin/Debug/net8.0/300326 - Интерфейсы.dll
+/home/fr1zb3e/300326 - Интерфейсы/bin/Debug/net8.0/300326 - Интерфейсы.pdb
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.dll
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/refint/300326 - Интерфейсы.dll
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.pdb
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/300326 - Интерфейсы.genruntimeconfig.cache
+/home/fr1zb3e/300326 - Интерфейсы/obj/Debug/net8.0/ref/300326 - Интерфейсы.dll
