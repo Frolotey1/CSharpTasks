@@ -1,0 +1,14 @@
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.AssemblyInfoInputs.cache
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.AssemblyInfo.cs
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/bin/Debug/net8.0/110426 - Factory Method и Abstract Factory
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/bin/Debug/net8.0/110426 - Factory Method и Abstract Factory.deps.json
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/bin/Debug/net8.0/110426 - Factory Method и Abstract Factory.runtimeconfig.json
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/bin/Debug/net8.0/110426 - Factory Method и Abstract Factory.dll
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/bin/Debug/net8.0/110426 - Factory Method и Abstract Factory.pdb
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.dll
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/refint/110426 - Factory Method и Abstract Factory.dll
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.pdb
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/110426 - Factory Method и Abstract Factory.genruntimeconfig.cache
+/home/fr1zb3e/110426 - Factory Method и Abstract Factory/obj/Debug/net8.0/ref/110426 - Factory Method и Abstract Factory.dll

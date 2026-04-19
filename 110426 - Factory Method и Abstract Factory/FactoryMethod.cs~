@@ -1,0 +1,58 @@
+namespace Patterns;
+using System;
+
+public interface IWidget {
+    void Render();
+}
+public class Button : IWidget {
+    private string name;
+    public Button(string name) {
+	this.name = name;
+    }
+    public void Render() {
+	Console.WriteLine($"Button: {this.name}");
+    }
+}
+public class TextBox : IWidget {
+    private string name;
+    public TextBox(string name) {
+	this.name = name;
+    }
+    public void Render() {
+	Console.WriteLine($"TextBox: {this.name}");
+    }
+}
+public class Panel : IWidget {
+    private string name;
+    public Panel(string name) {
+	this.name = name;
+    }
+    public void Render() {
+	Console.WriteLine($"Panel: {this.name}");
+    }
+}
+public class WidgetConfig {
+    public required string Type { get; init; }
+    public required string Name { get; init; }
+}
+public interface IWidgetFactory {
+    IWidget CreateWidget(WidgetConfig config);
+}
+public class StandardWidgetFactory : IWidgetFactory {
+    public IWidget CreateWidget(WidgetConfig config) {
+	switch(config.Type) {
+	    case "Button":
+		return new Button(config.Name);
+		break;
+	    case "TextBox":
+		return new TextBox(config.Name);
+		break;
+	    case "Panel":
+		return new Panel(config.Name);
+		break;
+	    default:
+	        return null;
+		break;
+	}
+    }
+}
