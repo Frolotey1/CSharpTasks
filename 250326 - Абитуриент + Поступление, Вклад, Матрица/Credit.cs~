@@ -26,9 +26,9 @@ public class Credit {
         Console.Write("Введите ФИО заёмщика: ");
         string fullName = Console.ReadLine();
         Console.Write("Введите сумму кредита (руб): ");
-        double amount = double.Parse(Console.ReadLine(),CulturInfo.InvariantCulture);
+        double amount = double.Parse(Console.ReadLine(),CultureInfo.InvariantCulture);
 	Console.Write("Введите процентную ставку: ");
-	double interestRate = double.Parse(Console.ReadLine(),CulturInfo.InvariantCulture);
+	double interestRate = double.Parse(Console.ReadLine(),CultureInfo.InvariantCulture);
         Credit credit = new Credit(fullName, amount, interestRate);
 
         Console.WriteLine("До платежа:");

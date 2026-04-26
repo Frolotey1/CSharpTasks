@@ -1,12 +1,12 @@
 namespace Project;
-using System;
 
 public static class Admission {
-    private static double passingScore = 4.5;
-    public static bool IsEqualToPassingScore(Applicant applicant) {
-	return applicant.AverageGrade == 4.5;
+    private static double _passingScore = 4.5;
+    public static double PassingScore {
+        get { return _passingScore; }
+        set { _passingScore = value; }
     }
-    public static bool IsNotEqualToPassingScore(Applicant applicant) {
-	return applicant.AverageGrade != 4.5;
+    public static bool IsPassingScore(Applicant applicant) {
+        return applicant.AverageGrade >= _passingScore;
     }
 }

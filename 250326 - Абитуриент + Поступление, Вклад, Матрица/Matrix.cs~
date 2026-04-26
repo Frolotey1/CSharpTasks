@@ -1,9 +1,12 @@
+namespace Project;
 using System;
 
-public class Matrix {
+public class Matrix
+{
     private int[,] data;
     private int rows;
     private int cols;
+
     public Matrix(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
@@ -13,29 +16,20 @@ public class Matrix {
         get { return data[i, j]; }
         set { data[i, j] = value; }
     }
-    public void FillManually()
-    {
-        Console.WriteLine($"\nЗаполните матрицу {rows}x{cols}:");
+    public void FillManually(string name) {
+        Console.WriteLine($"Заполните {name} {rows}x{cols}:");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                Console.Write($"Элемент [{i},{j}]: ");
+                Console.Write($"{name}[{i},{j}] = ");
                 data[i, j] = int.Parse(Console.ReadLine());
             }
         }
     }
-    public void FillRandom(int min = 1, int max = 10) {
-        Random rand = new Random();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                data[i, j] = rand.Next(min, max + 1);
-            }
-        }
-    }
-    public void Print(string name = "Матрица") {
+    public void Print(string name) {
         Console.WriteLine($"\n{name}:");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                Console.Write($"{data[i, j],5} ");
+                Console.Write($"{data[i, j]} ");
             }
             Console.WriteLine();
         }
@@ -45,8 +39,10 @@ public class Matrix {
             throw new ArgumentException("Матрицы должны быть одинакового размера!");
         }
         Matrix result = new Matrix(a.rows, a.cols);
-        for (int i = 0; i < a.rows; i++) {
-            for (int j = 0; j < a.cols; j++) {
+        for (int i = 0; i < a.rows; i++)
+        {
+            for (int j = 0; j < a.cols; j++)
+            {
                 result[i, j] = a[i, j] + b[i, j];
             }
         }
@@ -56,10 +52,10 @@ public class Matrix {
         if (a.rows != b.rows || a.cols != b.cols) {
             throw new ArgumentException("Матрицы должны быть одинакового размера!");
         }
+
         Matrix result = new Matrix(a.rows, a.cols);
         for (int i = 0; i < a.rows; i++) {
-            for (int j = 0; j < a.cols; j++)
-            {
+            for (int j = 0; j < a.cols; j++) {
                 result[i, j] = a[i, j] - b[i, j];
             }
         }
@@ -77,10 +73,9 @@ public class Matrix {
     public static Matrix operator *(int number, Matrix m) {
         return m * number;
     }
-
     public static Matrix operator *(Matrix a, Matrix b) {
-        if (a.cols != b.rows)  {
-            throw new ArgumentException("Количество столбцов первой матрицы должно равняться количеству строк второй");
+        if (a.cols != b.rows) {
+            throw new ArgumentException("Количество столбцов первой матрицы должно равняться количеству строк второй!");
         }
 
         Matrix result = new Matrix(a.rows, b.cols);
@@ -88,20 +83,18 @@ public class Matrix {
             for (int j = 0; j < b.cols; j++) {
                 int sum = 0;
                 for (int k = 0; k < a.cols; k++) {
-		    sum += a[i, k] * b[k, j];
+                    sum += a[i, k] * b[k, j];
                 }
                 result[i, j] = sum;
             }
         }
         return result;
     }
-    public static Matrix operator +(Matrix m, int number)
-    {
+
+    public static Matrix operator +(Matrix m, int number) {
         Matrix result = new Matrix(m.rows, m.cols);
-        for (int i = 0; i < m.rows; i++)
-        {
-            for (int j = 0; j < m.cols; j++)
-            {
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
                 result[i, j] = m[i, j] + number;
             }
         }
@@ -112,10 +105,8 @@ public class Matrix {
     }
     public static Matrix operator -(Matrix m, int number) {
         Matrix result = new Matrix(m.rows, m.cols);
-        for (int i = 0; i < m.rows; i++)
-        {
-            for (int j = 0; j < m.cols; j++)
-            {
+        for (int i = 0; i < m.rows; i++) {
+            for (int j = 0; j < m.cols; j++) {
                 result[i, j] = m[i, j] - number;
             }
         }
@@ -129,14 +120,50 @@ public class Matrix {
     }
     private int GetSum() {
         int sum = 0;
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 sum += data[i, j];
             }
         }
         return sum;
+    }
+    private static void AdditionMatrixes(Matrix m1, Matrix m2) {
+        Matrix sum = m1 + m2;
+        sum.Print("Сумма матриц");
+    }
+    private static void SubstractionMatrixes(Matrix m1, Matrix m2) {
+        Matrix sub = m1 - m2;
+        sub.Print("Разность матриц");
+    }
+    private static void MultiplicationMatrixes(Matrix m1, Matrix m2) {
+        try
+        {
+            Matrix mul = m1 * m2;
+            mul.Print("Произведение матриц");
+        }
+        catch (Exception ex) {
+            Console.WriteLine($"Ошибка: {ex.Message}");
+        }
+    }
+    private static void AdditionMatrixWithNumber(Matrix m, int number) {
+        Matrix result = m + number;
+        result.Print($"Сложение матрицы с числом {number}");
+    }
+    private static void MultiplicationMatrixWithNumber(Matrix m, int number) {
+        Matrix result = m * number;
+        result.Print($"Умножение матрицы на число {number}");
+    }
+    private static void SubstractionMatrixWithNumber(Matrix m, int number) {
+        Matrix result = m - number;
+        result.Print($"Вычитание числа {number} из матрицы");
+    }
+    private static void CompareMatrixes(Matrix m1, Matrix m2) {
+        if (m1 > m2)
+            Console.WriteLine("Первая матрица больше второй");
+        else if (m1 < m2)
+            Console.WriteLine("Первая матрица меньше второй");
+        else
+            Console.WriteLine("Матрицы равны по сумме элементов");
     }
     public static void Run() {
         Console.Write("Введите количество строк: ");
@@ -147,52 +174,73 @@ public class Matrix {
         Matrix m1 = new Matrix(rows, cols);
         Matrix m2 = new Matrix(rows, cols);
 
-        Console.WriteLine("Первая матрица");
-        m1.FillRandom();
+        m1.FillManually("Первая матрица");
         m1.Print("Первая матрица");
 
-        Console.WriteLine("Вторая матрица");
-        m2.FillRandom();
+        m2.FillManually("Вторая матрица");
         m2.Print("Вторая матрица");
 
-        Matrix sum = m1 + m2;
-        sum.Print("Сумма матриц (m1 + m2)");
+        string[] actions = { "Сложение матриц", "Вычитание матриц", "Умножение матриц", 
+                             "Сложение матрицы и числа", "Умножение матрицы на число", 
+                             "Вычитание числа из матрицы", "Сравнение матриц" };
 
-        Matrix diff = m1 - m2;
-        diff.Print("Разность матриц (m1 - m2)");
+        for (int i = 0; i < actions.Length; i++) {
+            Console.WriteLine($"{i + 1}) {actions[i]}");
+        }
 
-        Console.Write("Введите число для умножения: ");
-        int num = int.Parse(Console.ReadLine());
-        Matrix mulNum = m1 * num;
-        mulNum.Print($"Умножение первой матрицы на {num}");
+        Console.Write("Выберите действие: ");
+        int selectAction = int.Parse(Console.ReadLine());
 
-        Matrix addNum = m1 + num;
-        addNum.Print($"Сложение первой матрицы с числом {num}");
+        if (selectAction < 1 || selectAction > actions.Length) {
+            Console.WriteLine("Такого действия нет");
+            return;
+        }
 
-        Matrix subNum = m1 - num;
-        subNum.Print($"Вычитание числа {num} из первой матрицы");
+        switch (selectAction)
+        {
+            case 1:
+                AdditionMatrixes(m1, m2);
+                break;
+            case 2:
+                SubstractionMatrixes(m1, m2);
+                break;
+            case 3:
+                MultiplicationMatrixes(m1, m2);
+                break;
+            case 4:
+                Console.Write("Введите число для сложения с матрицей: ");
+                int addition = int.Parse(Console.ReadLine());
+                AdditionMatrixWithNumber(m1, addition);
+                break;
+            case 5:
+                Console.Write("Введите число для умножения матрицы: ");
+                int multiplication = int.Parse(Console.ReadLine());
+                MultiplicationMatrixWithNumber(m1, multiplication);
+                break;
+            case 6:
+                Console.Write("Введите число для вычитания из матрицы: ");
+                int subtraction = int.Parse(Console.ReadLine());
+                SubstractionMatrixWithNumber(m1, subtraction);
+                break;
+            case 7:
+                CompareMatrixes(m1, m2);
+                break;
+        }
 
-        Console.WriteLine($"Сравнение матриц (по сумме элементов):");
-        if (m1 > m2)
-            Console.WriteLine("Первая матрица больше второй");
-        else if (m1 < m2)
-            Console.WriteLine("Первая матрица меньше второй");
-        else
-            Console.WriteLine("Матрицы равны по сумме элементов");
-
-        Console.Write("Введите количество строк для третьей матрицы (для умножения): ");
+        Console.Write("\nВведите количество строк для третьей матрицы: ");
         int rows3 = int.Parse(Console.ReadLine());
         Console.Write("Введите количество столбцов для третьей матрицы: ");
         int cols3 = int.Parse(Console.ReadLine());
 
         Matrix m3 = new Matrix(rows3, cols3);
-        m3.FillRandom();
+        m3.FillManually("Третья матрица");
         m3.Print("Третья матрица");
 
-        try {
+        try  {
             Matrix mulMat = m1 * m3;
             mulMat.Print("Результат умножения первой и третьей матриц");
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine($"Ошибка: {ex.Message}");
         }

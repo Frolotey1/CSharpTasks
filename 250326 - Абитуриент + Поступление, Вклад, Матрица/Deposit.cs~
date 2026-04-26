@@ -29,7 +29,7 @@ public class Deposit {
         double amount = double.Parse(Console.ReadLine(),CultureInfo.InvariantCulture);
 	Console.Write("Введите процентную ставку: ");
 	double interestRate = double.Parse(Console.ReadLine(),CultureInfo.InvariantCulture);
-        Deposit deposit = new Deposit(fullName, amount);
+        Deposit deposit = new Deposit(fullName, amount,interestRate);
 
         Console.WriteLine("До начисления процентов:");
         deposit.Show();
