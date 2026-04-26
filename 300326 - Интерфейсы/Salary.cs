@@ -1,15 +1,16 @@
 namespace Project;
 using System;
 
-
 public interface ISalary {
-    string FullName { get; set; }   
-    int WorkingDays { get; set; }     
-    double CalculateSalary();      
+    string FullName { get; set; }
+    int WorkingDays { get; set; }
+    double CalculateSalary();
 }
+
 public interface IConsole {
-    void Print(); 
+    void Print();
 }
+
 public class Manager : ISalary, IConsole {
     public string FullName { get; set; }
     public int WorkingDays { get; set; }
@@ -18,15 +19,13 @@ public class Manager : ISalary, IConsole {
         FullName = fullName;
         WorkingDays = workingDays;
     }
-
     public double CalculateSalary() {
         return WorkingDays * 1000;
     }
-
     public void Print() {
         Console.WriteLine($"Менеджер");
         Console.WriteLine($"ФИО: {FullName}");
-        Console.WriteLine($"Рабочих дней: {WorkingDays}");
+        Console.WriteLine($"Количество рабочих дней: {WorkingDays}");
         Console.WriteLine($"Зарплата: {CalculateSalary()} руб.");
     }
 }
@@ -45,11 +44,10 @@ public class DepartmentHead : ISalary, IConsole {
     public void Print() {
         Console.WriteLine($"Глава отдела");
         Console.WriteLine($"ФИО: {FullName}");
-        Console.WriteLine($"Рабочих дней: {WorkingDays}");
+        Console.WriteLine($"Количество рабочих дней: {WorkingDays}");
         Console.WriteLine($"Зарплата: {CalculateSalary()} руб.");
     }
 }
-
 public class Accounting {
     public static double CalculateIncomeTax(ISalary employee, int days) {
         employee.WorkingDays = days;
@@ -60,7 +58,8 @@ public class Accounting {
 
 public class Salary {
     public static void Run() {
-	 Console.WriteLine("Менеджер");
+        Console.WriteLine("Расчёт зарплаты");
+        Console.WriteLine("Менеджер");
         Console.Write("Введите ФИО менеджера: ");
         string managerName = Console.ReadLine();
         Console.Write("Введите количество рабочих дней: ");

@@ -2,21 +2,18 @@ namespace Project;
 using System;
 
 public interface ICafeClient {
-    static int HourlyRate { get; set; }
-    string FullName { get; set; }
-    int Hours { get; set; }
-    double TotalCost();
+    static int HourlyRate {get; set;}
+    string FullName { get; set; }      
+    int Hours { get; set; }             
+    double TotalCost();               
 }
-
 public interface IConsoleOutput {
     void Print();
 }
-
 public class StandardClient : ICafeClient, IConsoleOutput {
-    public static int HourlyRate { get; set; } = 100;
+    public static int HourlyRate = 100; 
     public string FullName { get; set; }
     public int Hours { get; set; }
-
     public StandardClient(string fullName, int hours) {
         FullName = fullName;
         Hours = hours;
@@ -34,23 +31,22 @@ public class StandardClient : ICafeClient, IConsoleOutput {
 }
 
 public class VipClient : ICafeClient, IConsoleOutput {
-    public static int HourlyRate { get; set; } = 150;
+    public static int HourlyRate = 150; 
     public string FullName { get; set; }
     public int Hours { get; set; }
-
     public VipClient(string fullName, int hours) {
         FullName = fullName;
         Hours = hours;
     }
     public double TotalCost() {
         double baseCost = Hours * HourlyRate;
-        double tax = baseCost * 0.05;
+        double tax = baseCost * 0.05; 
         return baseCost + tax;
     }
     public void Print() {
         double baseCost = Hours * HourlyRate;
         double tax = baseCost * 0.05;
-
+        
         Console.WriteLine("VIP клиент");
         Console.WriteLine($"ФИО: {FullName}");
         Console.WriteLine($"Количество часов: {Hours}");
@@ -59,7 +55,6 @@ public class VipClient : ICafeClient, IConsoleOutput {
         Console.WriteLine($"Итого к оплате: {TotalCost()} руб.");
     }
 }
-
 public class AntiCoffee {
     public static void Run() {
         Console.WriteLine("Антикафе");
@@ -87,7 +82,7 @@ public class AntiCoffee {
             client.Print();
         }
         else {
-            Console.WriteLine("Неверный выбор!");
+            Console.WriteLine("Неверный выбор");
         }
     }
 }

@@ -7,12 +7,10 @@ public interface ISalary {
     int WorkingDays { get; set; }     
     double CalculateSalary();      
 }
-
-public interface IConsoleOutput {
+public interface IConsole {
     void Print(); 
 }
-
-public class Manager : ISalary, IConsoleOutput {
+public class Manager : ISalary, IConsole {
     public string FullName { get; set; }
     public int WorkingDays { get; set; }
 
@@ -33,7 +31,7 @@ public class Manager : ISalary, IConsoleOutput {
     }
 }
 
-public class DepartmentHead : ISalary, IConsoleOutput {
+public class DepartmentHead : ISalary, IConsole {
     public string FullName { get; set; }
     public int WorkingDays { get; set; }
 
