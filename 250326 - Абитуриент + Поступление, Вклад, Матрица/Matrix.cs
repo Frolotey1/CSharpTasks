@@ -227,7 +227,7 @@ public class Matrix
                 break;
         }
 
-        Console.Write("\nВведите количество строк для третьей матрицы: ");
+        Console.Write("Введите количество строк для третьей матрицы: ");
         int rows3 = int.Parse(Console.ReadLine());
         Console.Write("Введите количество столбцов для третьей матрицы: ");
         int cols3 = int.Parse(Console.ReadLine());
