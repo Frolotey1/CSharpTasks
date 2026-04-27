@@ -1,16 +1,6 @@
 namespace Project;
+using _300326___Интерфейсы;
 using System;
-
-public interface ICafeClient {
-    static int HourlyRate { get; set; }
-    string FullName { get; set; }
-    int Hours { get; set; }
-    double TotalCost();
-}
-
-public interface IConsoleOutput {
-    void Print();
-}
 
 public class StandardClient : ICafeClient, IConsoleOutput {
     public static int HourlyRate { get; set; } = 100;
@@ -62,7 +52,6 @@ public class VipClient : ICafeClient, IConsoleOutput {
 
 public class AntiCoffee {
     public static void Run() {
-        Console.WriteLine("Антикафе");
         Console.WriteLine("1) Стандартный клиент");
         Console.WriteLine("2) VIP клиент");
         Console.Write("Выберите тип клиента: ");

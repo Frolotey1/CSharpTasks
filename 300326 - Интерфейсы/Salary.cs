@@ -1,15 +1,6 @@
 namespace Project;
+using _300326___Интерфейсы;
 using System;
-
-public interface ISalary {
-    string FullName { get; set; }
-    int WorkingDays { get; set; }
-    double CalculateSalary();
-}
-
-public interface IConsole {
-    void Print();
-}
 
 public class Manager : ISalary, IConsole {
     public string FullName { get; set; }
@@ -61,7 +52,7 @@ public class Salary {
         Console.WriteLine("Расчёт зарплаты");
         Console.WriteLine("Менеджер");
         Console.Write("Введите ФИО менеджера: ");
-        string managerName = Console.ReadLine();
+        string? managerName = Console.ReadLine();
         Console.Write("Введите количество рабочих дней: ");
         int managerDays = int.Parse(Console.ReadLine());
 
@@ -69,12 +60,12 @@ public class Salary {
         manager.Print();
 
         double managerTax = Accounting.CalculateIncomeTax(manager, managerDays);
-        Console.WriteLine($"Подоходный налог (13%): {managerTax} руб.");
+        Console.WriteLine($"Подоходный налог от 13%: {managerTax} руб.");
         Console.WriteLine($"К выдаче на руки: {manager.CalculateSalary() - managerTax} руб.");
 
         Console.WriteLine("Глава отдела");
         Console.Write("Введите ФИО главы отдела: ");
-        string headName = Console.ReadLine();
+        string? headName = Console.ReadLine();
         Console.Write("Введите количество рабочих дней: ");
         int headDays = int.Parse(Console.ReadLine());
 
@@ -82,7 +73,7 @@ public class Salary {
         head.Print();
 
         double headTax = Accounting.CalculateIncomeTax(head, headDays);
-        Console.WriteLine($"Подоходный налог (13%): {headTax} руб.");
+        Console.WriteLine($"Подоходный налог от 13%: {headTax} руб.");
         Console.WriteLine($"К выдаче на руки: {head.CalculateSalary() - headTax} руб.");
     }
 }

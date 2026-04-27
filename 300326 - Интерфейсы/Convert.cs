@@ -1,16 +1,7 @@
 ﻿namespace Project;
 using System;
+using _300326___Интерфейсы;
 using System.Globalization;
-
-public interface IConverter {
-    string FromScale { get; set; }
-    string ToScale { get; set; }
-    double Convert(double value);
-}
-
-public interface IOutputConsole {
-    void Print();
-}
 
 public class CelsiusToFahrenheit : IConverter, IOutputConsole {
     public string FromScale { get; set; }
