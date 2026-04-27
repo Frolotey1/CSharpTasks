@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "110426 - Factory Method и Abstract Factory/1.0.0": {
+        "runtime": {
+          "110426 - Factory Method и Abstract Factory.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "110426 - Factory Method и Abstract Factory/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
