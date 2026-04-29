@@ -1,0 +1,14 @@
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.AssemblyInfoInputs.cache
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.AssemblyInfo.cs
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\bin\Debug\net8.0\290426 - LINQ.exe
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\bin\Debug\net8.0\290426 - LINQ.deps.json
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\bin\Debug\net8.0\290426 - LINQ.runtimeconfig.json
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\bin\Debug\net8.0\290426 - LINQ.dll
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\bin\Debug\net8.0\290426 - LINQ.pdb
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.dll
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\refint\290426 - LINQ.dll
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.pdb
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\290426 - LINQ.genruntimeconfig.cache
+C:\Users\User\Documents\Васьков Иван\290426 - LINQ\290426 - LINQ\obj\Debug\net8.0\ref\290426 - LINQ.dll
