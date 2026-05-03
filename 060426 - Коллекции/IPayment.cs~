@@ -1,0 +1,6 @@
+namespace Project;
+
+public interface IPayment {
+    static abstract string PaymentMethod { get; }
+    double Amount { get; }
+}

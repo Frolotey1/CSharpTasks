@@ -1,0 +1,20 @@
+namespace Project;
+using System;
+
+public struct Cash : IPayment {
+    public static string PaymentMethod => "Наличный";
+
+    private double _amount;
+    private double _change;
+
+    public Amount {get _amount;}
+
+    public Cash(double amount, double change) {
+        _amount = amount;
+        _change = change;
+    }
+    public override string ToString()
+    {
+        return $"Способ оплаты: {PaymentMethod} | Сумма: {Amount} руб. | Сдача: {_change} руб.";
+    }
+}

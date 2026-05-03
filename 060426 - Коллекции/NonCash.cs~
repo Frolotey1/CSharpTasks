@@ -1,0 +1,53 @@
+namespace Project;
+using System;
+
+public struct NonCash : IPayment {
+    public static string PaymentMethod => "Безналичный";
+
+    private double _amount;
+    private string _cardNumber;
+    private string _expiryDate;
+    private string _fullName;
+    private int _cvc;
+
+    public double Amount
+    {
+        get => _amount;
+        set => _amount = value;
+    }
+
+    public string CardNumber
+    {
+        get => _cardNumber;
+        set => _cardNumber = value;
+    }
+
+    public string ExpiryDate
+    {
+        get => _expiryDate;
+        set => _expiryDate = value;
+    }
+
+    public string FullName
+    {
+        get => _fullName;
+        set => _fullName = value;
+    }
+
+    public int CVC {
+        get => _cvc;
+        set => _cvc = value;
+    }
+
+    public NonCash(double amount, string cardNumber, string expiryDate, string fullName, int cvc) {
+        _amount = amount;
+        _cardNumber = cardNumber;
+        _expiryDate = expiryDate;
+        _fullName = fullName;
+        _cvc = cvc;
+    }
+
+    public override string ToString() {
+        return $"Способ оплаты: {PaymentMethod}, Сумма: {_amount:F2} руб., Карта: {_cardNumber}, Срок: {_expiryDate}, Владелец: {_fullName}, CVC: {_cvc}";
+    }
+}

@@ -1,81 +1,43 @@
+namespace Project;
 using System;
-using System.Collections.Generic;
-
-public interface IPayment {
-    static string PaymentMethod { get; }
-    double Amount { get; set; }          
-}
-
-public struct NonCash : IPayment {
-    public static string PaymentMethod = "Безналичный";
-    public double Amount { get; set; }
-    public string CardNumber { get; set; }
-    public string ExpiryDate { get; set; }
-    public string FullName { get; set; }
-    public int CVC { get; set; }
-
-    public NonCash(double amount, string cardNumber, string expiryDate, string fullName, int cvc) {
-        Amount = amount;
-        CardNumber = cardNumber;
-        ExpiryDate = expiryDate;
-        FullName = fullName;
-        CVC = cvc;
-    }
-
-    public override string ToString() {
-        return $"Способ оплаты: {PaymentMethod}, Сумма: {Amount} руб., Карта: {CardNumber}, Срок: {ExpiryDate}, Владелец: {FullName}, CVC: {CVC}";
-    }
-}
-
-public struct Cash : IPayment {
-    public static string PaymentMethod = "Наличный";
-    public double Amount { get; set; }
-    public double Change { get; set; } 
-
-    public Cash(double amount, double change) {
-        Amount = amount;
-        Change = change;
-    }
-
-    public override string ToString() {
-        return $"Способ оплаты: {PaymentMethod}, Сумма: {Amount} руб., Сдача: {Change} руб.";
-    }
-}
 
 public class Purchase<T> where T : IPayment {
-    private string PhoneNumber;
-    private T Payment;
-    private double PurchaseAmount;
+    private string _phoneNumber;
+    private T _payment;
+    private double _purchaseAmount;
 
-    public Purchase(string phoneNumber, T payment, double purchaseAmount) {
-        PhoneNumber = phoneNumber;
-        Payment = payment;
-        PurchaseAmount = purchaseAmount;
+    public Purchase(string phoneNumber, T payment, double purchaseAmount)
+    {
+        _phoneNumber = phoneNumber;
+        _payment = payment;
+        _purchaseAmount = purchaseAmount;
     }
-
     public string GetPurchaseInfo() {
-        return $"Номер телефона: {PhoneNumber}\n{Payment}\nСумма покупки: {PurchaseAmount} руб.";
+        return $"Номер телефона: {_phoneNumber}\n{_payment}\nСумма покупки: {_purchaseAmount} руб.";
     }
 
     public static void Run() {
+        Console.WriteLine("Оформление покупки");
+
         Console.Write("Введите номер телефона покупателя: ");
         string phone = Console.ReadLine();
 
-        Console.Write("Введите сумму покупки в рублях: ");
+        Console.Write("Введите сумму покупки (руб): ");
         double amount = double.Parse(Console.ReadLine());
 
         Console.WriteLine("Выберите способ оплаты:");
         Console.WriteLine("1) Безналичный");
         Console.WriteLine("2) Наличный");
+        Console.Write("Ваш выбор: ");
         int choice = int.Parse(Console.ReadLine());
 
         if (choice == 1) {
             Console.Write("Введите номер карты: ");
-            string cardNumber = Console.ReadLine();
+            string? cardNumber = Console.ReadLine();
             Console.Write("Введите дату выдачи (MM/YY): ");
-            string expiryDate = Console.ReadLine();
+            string? expiryDate = Console.ReadLine();
             Console.Write("Введите ФИО владельца: ");
-            string fullName = Console.ReadLine();
+            string? fullName = Console.ReadLine();
             Console.Write("Введите CVC-код: ");
             int cvc = int.Parse(Console.ReadLine());
 
@@ -93,8 +55,7 @@ public class Purchase<T> where T : IPayment {
             Console.WriteLine("Информация о покупке");
             Console.WriteLine(purchase.GetPurchaseInfo());
         }
-        else {
-            Console.WriteLine("Неверный выбор");
-        }
+        else 
+            Console.WriteLine("Неверный выбор!");
     }
 }

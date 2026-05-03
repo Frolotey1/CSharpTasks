@@ -4,154 +4,111 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 
-public class ShowFilm {
-    private string Filmname {get; set;}
-    private string Room {get; set;}
-    private string Showdate {get; set;}
-    private uint Countplaces {get; set;}
-    private double Cost {get; set;}
-    
+public struct ShowFilm {
+    private string _filmname;
+    private string _room;
+    private string _showdate;
+    private uint _countplaces;
+    private double _cost;
+
     public ShowFilm(string filmName, string room, string showDate, uint countPlaces, double cost) {
-        Filmname = filmName;
-        Room = room;
-        Showdate = showDate;
-        Countplaces = countPlaces;
-        Cost = cost;
+        _filmname = filmName;
+        _room = room;
+        _showdate = showDate;
+        _countplaces = countPlaces;
+        _cost = cost;
     }
-    
-    public static void Run() {
-        string filmname, room, showdate;
-        uint countplaces;
-        double cost;
-        
-        Console.Write("Введите название фильма: ");
-        filmname = Console.ReadLine();
-        Console.Write("Введите зал показа: ");
-        room = Console.ReadLine();
-        Console.Write("Введите дату показа: ");
-        showdate = Console.ReadLine();
-        Console.Write("Введите количество мест в зале: ");
-        countplaces = uint.Parse(Console.ReadLine());
-        Console.Write("Введите стоимость билета: ");
-        cost = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-        
-        ShowFilm show = new ShowFilm(filmname, room, showdate, countplaces, cost);
-        
-        Console.WriteLine("Информация о показе фильма: ");
-        show.Info();
-        
-        Console.Write("Введите количество людей, пришедших на показ (если не введёте — будет считаться полный зал): ");
-        string input = Console.ReadLine();
-        
-        uint countPeople;
-        double earnings;
-        
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            earnings = show.Salary(null);
-            Console.WriteLine($"Количество людей не указано. Заработок с полного зала: {earnings} рублей");
-        }
-        else
-        {
-            countPeople = uint.Parse(input);
-            earnings = show.Salary(countPeople);
-            Console.WriteLine($"Заработок с показа фильма: {earnings} рублей");
-        }
-        
-        Console.WriteLine("\nНапишите 1 для работы со списком структур, 0 в случае отказа от работы со структурами: ");
-        uint workWithList = uint.Parse(Console.ReadLine());
-        
-        if(workWithList == 1) ListStructures();
-        else return;    
-    }
-    
-    private void Info() {
-        Console.WriteLine($"Название фильма: {Filmname} | Зал показа: {Room} | Дата показа фильма: {Showdate} | Количество мест: {Countplaces} | Стоимость билета: {Cost}");
-    }
-    
-    private double Salary(uint? countPeople) {
+
+    public string GetFilmname() => _filmname;
+    public string GetShowdate() => _showdate;
+
+    public string Info => $"Название фильма: {_filmname} | Зал показа: {_room} | Дата показа: {_showdate} | Количество мест: {_countplaces} | Стоимость билета: {_cost} руб.";
+
+    public double Salary(uint? countPeople = null) {
         if (countPeople == null)
-            return Countplaces * Cost;
+            return _countplaces * _cost;
         else
-            return countPeople.Value * Cost;
+            return countPeople.Value * _cost;
     }
-    
-    private static void ListStructures() {
-        List<ShowFilm> list = new List<ShowFilm>();
-        ShowFilm showFilm = null;
-        
-        Console.Write("Введите количество структур, которое вы хотите сохранить в списке: ");
-        uint countStructures = uint.Parse(Console.ReadLine());
-        uint iterate = 0;
-        
-        while(iterate < countStructures) {
-            Console.Write($"\nВведите название фильма для {iterate + 1} структуры: ");
-            string filmName = Console.ReadLine();
-            Console.Write($"Введите зал показа для {iterate + 1} структуры: ");
+
+    public static void Run() {
+        List<ShowFilm> films = new List<ShowFilm>();
+
+        for (int i = 0; i < 5; i++) {
+            Console.Write("Введите название фильма: ");
+            string filmname = Console.ReadLine();
+            Console.Write("Введите зал показа: ");
             string room = Console.ReadLine();
-            Console.Write($"Введите дату показа в формате 'dd:MM:yy' для {iterate + 1} структуры: ");
-            string showDate = Console.ReadLine();
-            Console.Write($"Введите количество мест в зале для {iterate + 1} структуры: ");
-            uint countPlaces = uint.Parse(Console.ReadLine());
-            Console.Write($"Введите стоимость билета для {iterate + 1} структуры: ");
+            Console.Write("Введите дату и время показа: ");
+            string showdate = Console.ReadLine();
+            Console.Write("Введите количество мест в зале: ");
+            uint countplaces = uint.Parse(Console.ReadLine());
+            Console.Write("Введите стоимость билета: ");
             double cost = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            showFilm = new ShowFilm(filmName, room, showDate, countPlaces, cost);
-            list.Add(showFilm);
-            showFilm = null;
-            iterate++;
+            Console.WriteLine();
+
+            films.Add(new ShowFilm(filmname, room, showdate, countplaces, cost));
         }
-        
-        var sortedList = list.OrderBy(x => x.Filmname).ToList();
-        Console.WriteLine("\nОтсортированный список структур по названию фильма (по алфавиту): ");
-        foreach(var every in sortedList) 
-            Console.WriteLine($"Название фильма: {every.Filmname} | Зал показа: {every.Room} | Дата показа: {every.Showdate} | Количество мест: {every.Countplaces} | Стоимость билета: {every.Cost}");
-        
-        Console.WriteLine("\n1) Поиск экземпляра\n2) Удаление экземпляра\nВыберите опцию: ");
-        int select = int.Parse(Console.ReadLine());
-        
-        switch(select) {
-            case 1:
-                Console.Write("Введите название фильма: ");
-                string name = Console.ReadLine();
-                Console.Write("Введите дату показа фильма в формате 'dd:MM:yy': ");
-                string date = Console.ReadLine();
-                bool found = false;
-                foreach(var findElem in list) {
-                    if(findElem.Filmname == name && findElem.Showdate == date) {
-                        Console.WriteLine($"Название фильма: {findElem.Filmname} | Зал показа: {findElem.Room} | Дата показа: {findElem.Showdate} | Количество мест: {findElem.Countplaces} | Стоимость билета: {findElem.Cost}");
-                        found = true;
-                    }
-                }
-                if (!found) Console.WriteLine("Экземпляр не найден");
+
+        Console.WriteLine("Текущий список фильмов:");
+        foreach (var film in films)
+            Console.WriteLine(film.Info);
+
+        Console.WriteLine();
+        Console.Write("Введите название фильма для добавления: ");
+        string newFilmname = Console.ReadLine();
+        Console.Write("Введите зал показа: ");
+        string newRoom = Console.ReadLine();
+        Console.Write("Введите дату и время показа: ");
+        string newShowdate = Console.ReadLine();
+        Console.Write("Введите количество мест в зале: ");
+        uint newCountplaces = uint.Parse(Console.ReadLine());
+        Console.Write("Введите стоимость билета: ");
+        double newCost = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+        films.Add(new ShowFilm(newFilmname, newRoom, newShowdate, newCountplaces, newCost));
+
+        var sortedFilms = films.OrderBy(f => f.GetFilmname()).ToList();
+
+        Console.WriteLine("Отсортированный список по названию фильма:");
+        foreach (var film in sortedFilms)
+            Console.WriteLine(film.Info);
+
+        Console.WriteLine();
+        Console.Write("Введите название фильма для удаления: ");
+        string searchName = Console.ReadLine();
+        Console.Write("Введите дату и время показа для удаления: ");
+        string searchDate = Console.ReadLine();
+
+        ShowFilm? toRemove = null;
+        foreach (var film in films) {
+            if (film.GetFilmname() == searchName && film.GetShowdate() == searchDate) {
+                toRemove = film;
                 break;
-            case 2:
-                Console.Write("Введите название фильма: ");
-                string nameToDelete = Console.ReadLine();
-                Console.Write("Введите дату показа фильма в формате 'dd:MM:yy': ");
-                string dateToDelete = Console.ReadLine();
-                
-                ShowFilm toRemove = null;
-                foreach(var deleteElem in list) {
-                    if(deleteElem.Filmname == nameToDelete && deleteElem.Showdate == dateToDelete) {
-                        toRemove = deleteElem;
-                        break;
-                    }
-                }
-                if(toRemove != null) {
-                    list.Remove(toRemove);
-                    Console.WriteLine("Экземпляр удалён");
-                } else {
-                    Console.WriteLine("Экземпляр не найден");
-                }
-                
-                Console.WriteLine("\nОбновлённый список:");
-                foreach(var result in list) {
-                    Console.WriteLine($"Название фильма: {result.Filmname} | Зал показа: {result.Room} | Дата показа: {result.Showdate} | Количество мест: {result.Countplaces} | Стоимость билета: {result.Cost}");
-                }
-                break;
-            default:
-                Console.WriteLine("Нет такой опции");
-                break;
+            }
+        }
+
+        if (toRemove != null) {
+            films.Remove(toRemove);
+            Console.WriteLine("Экземпляр удалён");
+        }
+        else
+            Console.WriteLine("Экземпляр не найден");
+
+        Console.WriteLine("Итоговый список фильмов:");
+        foreach (var film in films.OrderBy(f => f.GetFilmname()))
+            Console.WriteLine(film.Info);
+
+        Console.WriteLine();
+        Console.Write("Введите количество пришедших людей (по нажатию Enter отобразится полный зал): ");
+        string input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input)) {
+            Console.WriteLine("Заработок с полного зала: " + films[0].Salary() + " рублей");
+        }
+        else {
+            uint people = uint.Parse(input);
+            Console.WriteLine("Заработок с показа: " + films[0].Salary(people) + " рублей");
         }
     }
 }
