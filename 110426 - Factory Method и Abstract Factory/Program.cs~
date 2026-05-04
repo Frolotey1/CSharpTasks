@@ -1,5 +1,6 @@
 using System;
-using Patterns;
+using CrossPlatformUISimulator;
+using CrossPlatformUISimulator.Hosts;
 
 public class Program {
     public static void Main() {

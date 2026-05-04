@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class DialogBuilder : IContainerBuilder {
+    private string _title;
+    private string _icon;
+    private List<ButtonConfig> _buttonConfigs;
+    private IThemeFactory _themeFactory;
+    private IWidgetFactory _widgetFactory;
+    private List<IWidget> _customWidgets;
+    private bool _themeConfigured;
+    private bool _hasButton;
+
+    public DialogBuilder(IWidgetFactory widgetFactory) {
+        _widgetFactory = widgetFactory;
+        _buttonConfigs = new List<ButtonConfig>();
+        _customWidgets = new List<IWidget>();
+        _themeConfigured = false;
+        _hasButton = false;
+    }
+
+    public IContainerBuilder SetTitle(string title)
+    {
+        _title = title;
+        return this;
+    }
+
+    public IContainerBuilder SetIcon(string icon) {
+        _icon = icon;
+        return this;
+    }
+
+    public IContainerBuilder AddButton(ButtonConfig config) {
+        _buttonConfigs.Add(config);
+        _hasButton = true;
+        return this;
+    }
+
+    public IContainerBuilder ConfigureTheme(IThemeFactory theme) {
+        _themeFactory = theme;
+        _themeConfigured = true;
+        return this;
+    }
+
+    public IContainerBuilder AddCustomWidget(IWidget widget) {
+        _customWidgets.Add(widget);
+        return this;
+    }
+
+    public IDialog Build() {
+        if (!_themeConfigured) {
+            throw new InvalidOperationException("Не указана тема диалога. Вызовите ConfigureTheme() перед Build()");
+        }
+        
+        if (string.IsNullOrEmpty(_title)) {
+            throw new InvalidOperationException("Не указан заголовок диалога. Вызовите SetTitle() перед Build()");
+        }
+        
+        if (!_hasButton) {
+            throw new InvalidOperationException("Диалог должен содержать хотя бы одну кнопку. Вызовите AddButton() перед Build()");
+        }
+
+        Dialog dialog = new Dialog();
+        dialog.Title = _title;
+        dialog.Icon = _icon;
+        
+        foreach (var config in _buttonConfigs) {
+            IButton button = _themeFactory.CreateButton();
+            dialog.Buttons.Add(button);
+        }
+        
+        foreach (var widget in _customWidgets) {
+            dialog.CustomWidgets.Add(widget);
+        }
+        
+        return dialog;
+    }
+}
