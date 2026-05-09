@@ -1,0 +1,11 @@
+namespace Project;
+using System;
+using System.Collectioncs.Generic;
+
+public interface IMediaManager<T> {
+    void Add(T item);
+    bool Remove(string title);
+    T FindByTitle(string title);
+    IEnumerable<T> FilterByYear(uint year);
+    IEnumerable<T> GetAllAvailable();
+}

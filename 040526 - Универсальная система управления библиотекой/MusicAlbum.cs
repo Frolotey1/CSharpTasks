@@ -1,0 +1,20 @@
+namespace Project;
+using System;
+
+public class MusicAlbum : Media
+{
+    public string Performer { get; set; }
+    public uint CountSongs { get; set; }
+
+    public MusicAlbum(string title, string author, uint yearPublished, string performer, uint countSongs)
+        : base(title, author, yearPublished)
+    {
+        Performer = performer;
+        CountSongs = countSongs;
+    }
+
+    public override string GetInfo()
+    {
+        return base.GetInfo() + $" | Исполнитель: {Performer} | Песен: {CountSongs}";
+    }
+}

@@ -1,0 +1,81 @@
+namespace Project;
+using System;
+using System.Collections.Generic;
+
+public class Library<T> : IMediaManager<T> {
+    private List<T> IMediaManagerList;
+    public Library() {
+	IMediaManagerList = new List<T>();
+    }
+    public void Add(T item) {
+	try {
+	    if(!IMediaManagerList.Contains(item)) {
+		IMediaManagerList.Add(item);
+	    }
+	} catch (Exception exc) {
+	    Console.WriteLine($"Элемент уже находится в списке: {exc.Message}");
+	}
+    }
+    public bool Remove(string title) {
+	bool found = false;
+	foreach(var findItem in IMediaManagerList) {
+	    if(findItem.Title == title) {
+		found = IMediaManagerList.Remove(findItem);
+		break;
+	    }
+	}
+
+	if(!found) {
+	    throw Exception("Элемент отсутствует в списке");
+	}
+	return found;
+    }
+    public T FindByTitle(string title) {
+	bool foundByTitle = false;
+        foreach(var findItem in IMediaManagerList) {
+	    if(findItem.Title == title) {
+		foundByTitle = IMediaManagerList[IMediaManagerList.IndexOf(findItem)];
+		break;
+	    }
+	}
+
+	if(!foundByTitle) {
+	    throw Exception("Элемент отсутствует в списке");
+	}
+
+	return foundByTitle;
+    }
+    public IEnumerable<T> FilterByYear(uint year) {
+	foreach(var findByYear in IMediaManagerList) {
+	    if(findByYear.YearPublished == year)
+		yield return findByYear;
+	}
+    }
+    public IEnumerable<T> GetAllAvailable() {
+	foreach(var everyMediaComponent in IMediaManagerList) {
+	    if(everyMediaComponent.isAvailable())
+		yield return everyMediaComponent;
+	}
+    }
+    public void FindBooksAfterDefiniteYear(uint year) {
+	var listResult = IMediaManagerList.Where(findBook => findBook.Year > year).ToList();
+	foreach(var getBooks in listResult) {
+	    Console.WriteLine(getBooks);
+	}
+    }
+    public void GetListMovies(uint duration) {
+	var sortedListByDuration = IMediaManagerList.OrderBy(sorted => sorted.Duration == duration).ToList();
+
+	foreach(var getMovies in sortedListByDuration) {
+	    Console.WriteLine(getMovies);
+	}
+    }
+    public void FindNotAvailableComponents() {
+        var findNotAvailable = IMediaManagerList.Where(find => find.IsAvailable == 0).ToList();
+
+	foreach(var getNotAvailables in findNotAvailable) {
+	    Console.WriteLine(getNotAvailables);
+	}
+    }
+    
+}

@@ -1,0 +1,159 @@
+﻿using Project;
+using System;
+using System.Collections.Generic;
+
+public class Program {
+    private static Library<Media> library = new Library<Media>();
+
+    public static void Main()
+    {
+        Console.WriteLine("1) Добавить книгу");
+	Console.WriteLine("2) Добавить фильм");
+	Console.WriteLine("3) Добавить музыкальный альбом");
+	Console.WriteLine("4) Показать все элементы");
+	Console.WriteLine("5) Найти элемент по названию");
+	Console.WriteLine("6) Удалить элемент");
+	Console.WriteLine("7) Фильтр по году выпуска");
+	Console.WriteLine("8) Фильмы, отсортированные по длительности");
+	Console.WriteLine("9) Недоступные элементы");
+	Console.WriteLine("10) Выдать элемент");
+	Console.WriteLine("11) Вернуть элемент");
+	Console.WriteLine("12) Экспорт в файл");
+	Console.WriteLine("13) Выход");
+	Console.Write("Выберите действие: ");
+	int choice = int.Parse(Console.ReadLine());
+
+	switch (choice)
+	{
+	    case 1:
+		AddBook();
+		break;
+	    case 2:
+		AddMovie();
+		break;
+	    case 3:
+		AddMusicAlbum();
+		break;
+	    case 4:
+		library.PrintAll();
+		break;
+	    case 5:
+		FindByTitle();
+		break;
+	    case 6:
+		RemoveItem();
+		break;
+	    case 7:
+		FilterByYear();
+		break;
+	    case 8:
+		library.GetListMoviesSortedByDuration();
+		break;
+	    case 9:
+		library.FindNotAvailableComponents();
+		break;
+	    case 10:
+		BorrowItem();
+		break;
+	    case 11:
+		ReturnItem();
+		break;
+	    case 12:
+		library.ExportToFile("library_export.json");
+		break;
+	    case 13:
+		Console.WriteLine("Завершение программы");
+		return;
+	    default:
+		Console.WriteLine("Неверный выбор");
+		break;
+	}
+    }
+
+    private static void AddBook()
+    {
+        Console.Write("Введите название книги: ");
+        string? title = Console.ReadLine();
+        Console.Write("Введите автора: ");
+        string? author = Console.ReadLine();
+        Console.Write("Введите год выпуска: ");
+        uint year = uint.Parse(Console.ReadLine());
+        Console.Write("Введите количество страниц: ");
+        uint pages = uint.Parse(Console.ReadLine());
+        Console.Write("Введите жанр: ");
+        string? genre = Console.ReadLine();
+
+        Book book = new Book(title, author, year, pages, genre);
+        library.Add(book);
+    }
+
+    private static void AddMovie()
+    {
+        Console.Write("Введите название фильма: ");
+        string? title = Console.ReadLine();
+        Console.Write("Введите режиссёра: ");
+        string? director = Console.ReadLine();
+        Console.Write("Введите год выпуска: ");
+        uint year = uint.Parse(Console.ReadLine());
+        Console.Write("Введите длительность (минуты): ");
+        uint duration = uint.Parse(Console.ReadLine());
+
+        Movie movie = new Movie(title, director, year, duration, director);
+        library.Add(movie);
+    }
+
+    private static void AddMusicAlbum()
+    {
+        Console.Write("Введите название альбома: ");
+        string? title = Console.ReadLine();
+        Console.Write("Введите исполнителя: ");
+        string? performer = Console.ReadLine();
+        Console.Write("Введите год выпуска: ");
+        uint year = uint.Parse(Console.ReadLine());
+        Console.Write("Введите количество песен: ");
+        uint songs = uint.Parse(Console.ReadLine());
+
+        MusicAlbum album = new MusicAlbum(title, performer, year, performer, songs);
+        library.Add(album);
+    }
+
+    private static void FindByTitle()
+    {
+        Console.Write("Введите название: ");
+        string? title = Console.ReadLine();
+        Media item = library.FindByTitle(title);
+        Console.WriteLine(item.GetInfo());
+    }
+
+    private static void RemoveItem()
+    {
+        Console.Write("Введите название для удаления: ");
+        string? title = Console.ReadLine();
+        library.Remove(title);
+    }
+
+    private static void FilterByYear()
+    {
+        Console.Write("Введите год: ");
+        uint year = uint.Parse(Console.ReadLine());
+        var result = library.FilterByYear(year);
+        foreach (var item in result)
+        {
+            Console.WriteLine(item.GetInfo());
+        }
+    }
+
+    private static void BorrowItem()
+    {
+        Console.Write("Введите название для выдачи: ");
+        string? title = Console.ReadLine();
+        library.BorrowItem(title);
+    }
+
+    private static void ReturnItem()
+    {
+        Console.Write("Введите название для возврата: ");
+        string? title = Console.ReadLine();
+        library.ReturnItem(title);
+    }
+}

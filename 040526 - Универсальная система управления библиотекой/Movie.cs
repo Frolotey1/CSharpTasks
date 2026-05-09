@@ -1,0 +1,20 @@
+namespace Project;
+using System;
+
+public class Movie : Media
+{
+    public uint Duration { get; set; }
+    public string Director { get; set; }
+
+    public Movie(string title, string author, uint yearPublished, uint duration, string director)
+        : base(title, author, yearPublished)
+    {
+        Duration = duration;
+        Director = director;
+    }
+
+    public override string GetInfo()
+    {
+        return base.GetInfo() + $" | Режиссёр: {Director} | Длительность: {Duration} мин.";
+    }
+}
