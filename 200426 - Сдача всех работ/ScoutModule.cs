@@ -1,0 +1,14 @@
+namespace Project;
+
+public sealed class ScoutModule : AbstractModule {
+    public ScoutModule(Coord position, int fuel) : base(position, fuel) {}
+
+    public override void Act() {
+        if (Fuel <= 0) {
+            return;
+        }
+
+        Position = new Coord(Position.X + 1, Position.Y);
+        ConsumeFuel(1);
+    }
+}

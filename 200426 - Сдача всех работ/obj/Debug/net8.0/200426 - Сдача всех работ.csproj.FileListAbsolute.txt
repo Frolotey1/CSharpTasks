@@ -1,0 +1,14 @@
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.AssemblyInfoInputs.cache
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.AssemblyInfo.cs
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/200426 - Сдача всех работ/bin/Debug/net8.0/200426 - Сдача всех работ
+/home/fr1zb3e/200426 - Сдача всех работ/bin/Debug/net8.0/200426 - Сдача всех работ.deps.json
+/home/fr1zb3e/200426 - Сдача всех работ/bin/Debug/net8.0/200426 - Сдача всех работ.runtimeconfig.json
+/home/fr1zb3e/200426 - Сдача всех работ/bin/Debug/net8.0/200426 - Сдача всех работ.dll
+/home/fr1zb3e/200426 - Сдача всех работ/bin/Debug/net8.0/200426 - Сдача всех работ.pdb
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.dll
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/refint/200426 - Сдача всех работ.dll
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.pdb
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/200426 - Сдача всех работ.genruntimeconfig.cache
+/home/fr1zb3e/200426 - Сдача всех работ/obj/Debug/net8.0/ref/200426 - Сдача всех работ.dll
