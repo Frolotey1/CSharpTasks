@@ -1,13 +1,19 @@
 namespace Patterns;
 
-public class ErrorDialogDirector {
+public class ErrorDialogDirector
+{
     private IContainerBuilder _builder;
-    
-    public ErrorDialogDirector(IContainerBuilder builder) {
+    private IThemeFactory _themeFactory;
+
+    public ErrorDialogDirector(IContainerBuilder builder, IThemeFactory themeFactory)
+    {
         _builder = builder;
+        _themeFactory = themeFactory;
     }
-    
-    public IDialog Construct() {
+
+    public IDialog Construct()
+    {
+        _builder.ConfigureTheme(_themeFactory);
         _builder.SetTitle("Ошибка");
         _builder.SetIcon("error.png");
         _builder.AddButton(new ButtonConfig("OK", true));
