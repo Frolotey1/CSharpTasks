@@ -220,9 +220,9 @@ public class Program {
 
         foreach (IInventoryItem item in items) {
             if (item is Book book) {
-                Console.WriteLine("[Книга] " + book.Name + " | Автор: " + book.Author + " | Страниц: " + book.Pages + " | " + book.Price + " руб. | " + book.Quantity + " шт. | Категория: " + book.Category);
+                Console.WriteLine("Книга: " + book.Name + " | Автор: " + book.Author + " | Страниц: " + book.Pages + " | " + book.Price + " руб. | " + book.Quantity + " шт. | Категория: " + book.Category);
             } else if (item is HardwarePart part) {
-                Console.WriteLine("[Деталь] " + part.Name + " | Производитель: " + part.Manufacturer + " | Модель: " + part.Model + " | " + part.Price + " руб. | " + part.Quantity + " шт. | Категория: " + part.Category);
+                Console.WriteLine("Деталь: " + part.Name + " | Производитель: " + part.Manufacturer + " | Модель: " + part.Model + " | " + part.Price + " руб. | " + part.Quantity + " шт. | Категория: " + part.Category);
             }
         }
     }
@@ -316,7 +316,7 @@ public class Program {
     }
 
     private static void ShowAnalytics() {
-        Console.WriteLine("1. Товары с остатком меньше 5: ");
+        Console.WriteLine("1. Товары с остатком <= 5: ");
         List<IInventoryItem> lowStockItems = warehouse.GetLowStockItems(5).ToList();
         if (lowStockItems.Count == 0) {
             Console.WriteLine("Нет товаров с низким остатком.");

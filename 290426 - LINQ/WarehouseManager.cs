@@ -7,6 +7,10 @@ namespace SmartWarehouse;
 public delegate void LowStockAlertHandler(string itemName, int currentQuantity);
 
 public class WarehouseManager<T> where T : class, IInventoryItem {
+    // Словарик вместо списков, потому что:
+    // 1) По названию (по ключу) элемент можно сразу найти, чем перебирать просто все элементы в списке.
+    // 2) Названия товаров (ключи) уникальны в словарях, тогда как в списках их может быть несколько и трудно найти определенный элемент по определенному названию
+    
     private Dictionary<string, T> items = new Dictionary<string, T>();
 
     public event LowStockAlertHandler OnLowStock;
@@ -18,7 +22,7 @@ public class WarehouseManager<T> where T : class, IInventoryItem {
         }
 
         items.Add(item.Name, item);
-        Console.WriteLine("Добавлен товар: " + item.Name + ", количество: " + item.Quantity);
+        Console.WriteLine("Добавлен товар: " + item.Name + " | количество: " + item.Quantity);
     }
 
     public bool Remove(string name) {
@@ -45,7 +49,7 @@ public class WarehouseManager<T> where T : class, IInventoryItem {
         int oldQuantity = item.Quantity;
         item.Quantity = newQuantity;
 
-        Console.WriteLine("Количество товара '" + name + "' изменено: c " + oldQuantity + " на " + newQuantity);
+        Console.WriteLine("Количество товара '" + name + "' изменено c " + oldQuantity + " на " + newQuantity);
 
         if (newQuantity <= 5) {
             OnLowStock?.Invoke(name, newQuantity);
