@@ -1,8 +1,7 @@
 namespace Project;
 
 public class SimulationEngine {
-    public bool TryStep(AbstractModule[][] map, in int turnNumber, out int processedCount, ref int totalFuelConsumed)
-    {
+    public bool TryStep(AbstractModule[][] map, in int turnNumber, out int processedCount, ref int totalFuelConsumed) {
         processedCount = 0;
 
         if (map == null || map.Length == 0) {

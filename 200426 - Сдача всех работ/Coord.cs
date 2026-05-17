@@ -4,14 +4,12 @@ public readonly struct Coord {
     public int X { get; }
     public int Y { get; }
 
-    public Coord(int x, int y)
-    {
+    public Coord(int x, int y) {
         X = x;
         Y = y;
     }
 
-    public static Coord operator +(Coord a, Coord b)
-    {
+    public static Coord operator +(Coord a, Coord b) {
         return new Coord(a.X + b.X, a.Y + b.Y);
     }
 
