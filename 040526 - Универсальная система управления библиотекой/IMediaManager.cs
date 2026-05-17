@@ -2,8 +2,7 @@ namespace Project;
 using System;
 using System.Collections.Generic;
 
-public interface IMediaManager<T> where T : Media
-{
+public interface IMediaManager<T> where T : Media {
     void Add(T item);
     bool Remove(string title);
     T FindByTitle(string title);

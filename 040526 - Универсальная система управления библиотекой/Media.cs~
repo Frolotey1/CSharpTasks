@@ -18,6 +18,6 @@ public class Media
 
     public virtual string GetInfo()
     {
-        return $"Название: {Title}, Автор: {Author}, Год: {YearPublished}, Доступно: {(IsAvailable ? "Да" : "Нет")}";
+        return $"Название: {Title} | Автор: {Author} | Год: {YearPublished} | Доступно: {(IsAvailable ? "Да" : "Нет")}";
     }
 }

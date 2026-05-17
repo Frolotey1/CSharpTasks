@@ -15,6 +15,6 @@ public class Book : Media
 
     public override string GetInfo()
     {
-        return base.GetInfo() + $", Жанр: {Genre}, Страниц: {CountPages}";
+        return base.GetInfo() + $" | Жанр: {Genre} | Страниц: {CountPages}";
     }
 }
