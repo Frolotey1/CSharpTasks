@@ -1,0 +1,3 @@
+﻿Sword of Destiny|100|Legendary|Drains life from the wielder|true
+Cursed Amulet|45|Rare|Slowly turns wielder into stone|true
+Blessed Shield|70|Epic|Protects from dark magic|false

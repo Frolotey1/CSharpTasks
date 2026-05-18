@@ -1,0 +1,26 @@
+[
+  {
+    "TechLevel": 9.5,
+    "Manufacturer": "TechMage Inc.",
+    "Id": 10,
+    "Name": "Hyper Phase Blaster",
+    "PowerLevel": 88,
+    "Rarity": 2
+  },
+  {
+    "TechLevel": 7.8,
+    "Manufacturer": "NeuroTech Labs",
+    "Id": 11,
+    "Name": "Neural Enhancer",
+    "PowerLevel": 72,
+    "Rarity": 1
+  },
+  {
+    "TechLevel": 9.9,
+    "Manufacturer": "Arcane Systems",
+    "Id": 12,
+    "Name": "Quantum Displacer",
+    "PowerLevel": 95,
+    "Rarity": 3
+  }
+]

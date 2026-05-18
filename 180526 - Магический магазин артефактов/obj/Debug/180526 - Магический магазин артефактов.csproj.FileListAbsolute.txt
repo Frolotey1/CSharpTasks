@@ -1,0 +1,10 @@
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\bin\Debug\180526 - Магический магазин артефактов.exe.config
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\bin\Debug\180526 - Магический магазин артефактов.exe
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\bin\Debug\180526 - Магический магазин артефактов.pdb
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\obj\Debug\180526 - Магический магазин артефактов.csproj.AssemblyReference.cache
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\obj\Debug\180526 - Магический магазин артефактов.csproj.CoreCompileInputs.cache
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\obj\Debug\180526 -.8621B48A.Up2Date
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\obj\Debug\180526 - Магический магазин артефактов.exe
+C:\Users\Top\Documents\Мерзляков Тимофей\180526 - Магический магазин артефактов\obj\Debug\180526 - Магический магазин артефактов.pdb
