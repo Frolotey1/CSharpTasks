@@ -1,0 +1,131 @@
+cat > "/home/fr1zb3e/080526 - Factory Method и Abstract Factory/Builder/DialogBuilder.cs" << 'EOF'
+using System;
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class DialogBuilder : IContainerBuilder
+{
+    private string _id;
+    private Point _position;
+    private string _title;
+    private string _icon;
+    private List<ButtonConfig> _buttonConfigs;
+    private IThemeFactory _themeFactory;
+    private IWidgetFactory _widgetFactory;
+    private List<IWidget> _customWidgets;
+    private List<IUIComponent> _children;
+    private bool _themeConfigured;
+    private bool _hasButton;
+    private IRenderingStrategy _strategy;
+
+    public DialogBuilder(IWidgetFactory widgetFactory)
+    {
+        _widgetFactory = widgetFactory;
+        _buttonConfigs = new List<ButtonConfig>();
+        _customWidgets = new List<IWidget>();
+        _children = new List<IUIComponent>();
+        _themeConfigured = false;
+        _hasButton = false;
+    }
+
+    public IContainerBuilder SetId(string id)
+    {
+        _id = id;
+        return this;
+    }
+
+    public IContainerBuilder SetPosition(Point position)
+    {
+        _position = position;
+        return this;
+    }
+
+    public IContainerBuilder SetRenderingStrategy(IRenderingStrategy strategy)
+    {
+        _strategy = strategy;
+        return this;
+    }
+
+    public IContainerBuilder SetTitle(string title)
+    {
+        _title = title;
+        return this;
+    }
+
+    public IContainerBuilder SetIcon(string icon)
+    {
+        _icon = icon;
+        return this;
+    }
+
+    public IContainerBuilder AddButton(ButtonConfig config)
+    {
+        _buttonConfigs.Add(config);
+        _hasButton = true;
+        return this;
+    }
+
+    public IContainerBuilder AddChild(IUIComponent child)
+    {
+        _children.Add(child);
+        return this;
+    }
+
+    public IContainerBuilder ConfigureTheme(IThemeFactory theme)
+    {
+        _themeFactory = theme;
+        _themeConfigured = true;
+        return this;
+    }
+
+    public IContainerBuilder AddCustomWidget(IWidget widget)
+    {
+        _customWidgets.Add(widget);
+        return this;
+    }
+
+    public IContainerComponent Build()
+    {
+        if (!_themeConfigured)
+        {
+            throw new InvalidOperationException("Не указана тема диалога. Вызовите ConfigureTheme() перед Build()");
+        }
+        
+        if (string.IsNullOrEmpty(_title))
+        {
+            throw new InvalidOperationException("Не указан заголовок диалога. Вызовите SetTitle() перед Build()");
+        }
+        
+        if (!_hasButton)
+        {
+            throw new InvalidOperationException("Диалог должен содержать хотя бы одну кнопку. Вызовите AddButton() перед Build()");
+        }
+
+        var panel = new PanelComponent(_id ?? "dialog", _strategy ?? _themeFactory.CreateRenderingStrategy());
+        panel.SetPosition(_position);
+        
+        foreach (ButtonConfig config in _buttonConfigs)
+        {
+            var buttonComponent = new ButtonComponent($"btn_{config.Text}", _strategy ?? _themeFactory.CreateRenderingStrategy(), config.Text);
+            panel.AddChild(buttonComponent);
+        }
+        
+        foreach (IWidget widget in _customWidgets)
+        {
+            var widgetComponent = new ButtonComponent($"widget_{widget.GetType().Name}", _strategy ?? _themeFactory.CreateRenderingStrategy(), "Widget");
+            panel.AddChild(widgetComponent);
+        }
+        
+        foreach (IUIComponent child in _children)
+        {
+            panel.AddChild(child);
+        }
+
+        var telemetry = ApplicationTelemetrySingleton.Instance;
+        telemetry.LogOperation("Builder", "Build", TimeSpan.Zero, $"Id={_id}");
+
+        return panel;
+    }
+}
+EOF
