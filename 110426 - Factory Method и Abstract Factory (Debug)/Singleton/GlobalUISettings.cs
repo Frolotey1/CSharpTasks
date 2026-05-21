@@ -1,0 +1,13 @@
+namespace Patterns;
+
+public class GlobalUiSettings {
+    public string DefaultFont { get; }
+    public int DefaultFontSize { get; }
+    public string Theme { get; }
+
+    public GlobalUiSettings(string defaultFont, int defaultFontSize, string theme) {
+        DefaultFont = defaultFont;
+        DefaultFontSize = defaultFontSize;
+        Theme = theme;
+    }
+}
