@@ -8,7 +8,7 @@ public class Program
         Console.WriteLine("Главное меню");
         Console.WriteLine("1) Factory Method");
         Console.WriteLine("2) Abstract Factory");
-        Console.WriteLine("3) Integration (Bridge + Composite + Adapter + Singleton)");
+        Console.WriteLine("3) Integration (Bridge + Composite + Adapter + Singleton + Bridge + Composite)");
         Console.WriteLine("4) Запустить тесты");
         Console.WriteLine("5) Выход");
         Console.Write("Выберите опцию: ");
