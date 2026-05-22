@@ -1,0 +1,10 @@
+namespace Patterns;
+
+public interface IContainerBuilder
+{
+    IContainerBuilder SetId(string id);
+    IContainerBuilder SetPosition(Point position);
+    IContainerBuilder SetRenderingStrategy(IRenderingStrategy strategy);
+    IContainerBuilder AddChild(IUIComponent child);
+    IContainerComponent Build();
+}

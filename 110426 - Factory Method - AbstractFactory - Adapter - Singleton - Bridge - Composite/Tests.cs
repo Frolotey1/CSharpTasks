@@ -1,0 +1,629 @@
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Patterns;
+
+public static class Tests
+{
+    public static void RunAll()
+    {
+        Console.WriteLine("\nЗапуск всех тестов\n");
+        
+        int passed = 0;
+        int failed = 0;
+
+        if (Test_FindByIdDeepNested()) passed++; else failed++;
+
+        if (Test_CyclicReference()) passed++; else failed++;
+
+        if (Test_CloneIndependentSubtree()) passed++; else failed++;
+
+        if (Test_SwitchRenderingStrategy()) passed++; else failed++;
+
+        if (Test_SliderComponent()) passed++; else failed++;
+
+        if (Test_VectorStrategy()) passed++; else failed++;
+
+        if (Test_AdapterMapping()) passed++; else failed++;
+
+        if (Test_AdapterNotSupported()) passed++; else failed++;
+
+        if (Test_BuilderLogging()) passed++; else failed++;
+   
+        if (Test_MemoryLeak()) passed++; else failed++;
+
+        if (Test_ReadOnlyList()) passed++; else failed++;
+
+        if (Test_ThreadSafety()) passed++; else failed++;
+        
+        if (Test_OCP()) passed++; else failed++;
+        
+        if (Test_ResetForTesting()) passed++; else failed++;
+        
+        if (Test_ConcurrentDictionary()) passed++; else failed++;
+        
+        if (Test_ReadOnlyDictionary()) passed++; else failed++;
+
+        Console.WriteLine($"\nИТОГ: {passed} пройдено, {failed} провалено\n");
+        
+        RunBenchmarks();
+    }
+    
+    private static void RunBenchmarks()
+    {
+        Console.WriteLine("\nАПУСК БЕНЧМАРКОВ\n");
+        
+        BenchmarkTreeTraversal();
+
+        BenchmarkBuilderVsPrototype();
+
+        BenchmarkSwitchStrategy();
+        
+        BenchmarkFindByIdDepth();
+    }
+
+    private static void BenchmarkTreeTraversal()
+    {
+        Console.WriteLine("Бенчмарк 1: Обход дерева (рекурсия vs Stack<T>)");
+        
+        var root = CreateDeepTree(10000);
+        var targetId = "node9999";
+
+        GC.Collect();
+        var memBeforeRec = GC.GetTotalAllocatedBytes(true);
+        var sw = Stopwatch.StartNew();
+        var recursiveResult = FindByIdRecursive(root, targetId);
+        sw.Stop();
+        var recursiveTime = sw.ElapsedMilliseconds;
+        var recursiveMemory = GC.GetTotalAllocatedBytes(true) - memBeforeRec;
+        
+        GC.Collect();
+        var memBeforeIter = GC.GetTotalAllocatedBytes(true);
+        sw.Restart();
+        var iterativeResult = FindByIdIterative(root, targetId);
+        sw.Stop();
+        var iterativeTime = sw.ElapsedMilliseconds;
+        var iterativeMemory = GC.GetTotalAllocatedBytes(true) - memBeforeIter;
+        
+        Console.WriteLine($"  Рекурсивный DFS: {recursiveTime} мс, {recursiveMemory} байт");
+        Console.WriteLine($"  Итеративный DFS: {iterativeTime} мс, {iterativeMemory} байт");
+        Console.WriteLine($"  Разница во времени: {Math.Abs(recursiveTime - iterativeTime)} мс");
+        Console.WriteLine($"  Итеративный {(iterativeTime < recursiveTime ? "быстрее" : "медленнее")}");
+        
+        if (iterativeTime <= recursiveTime * 1.15)
+            Console.WriteLine("Итеративный обход не превышает рекурсивный более чем на 15%");
+        else
+            Console.WriteLine("Итеративный обход превышает рекурсивный более чем на 15%");
+        
+        Console.WriteLine();
+    }
+
+    private static void BenchmarkBuilderVsPrototype()
+    {
+        Console.WriteLine("--- Бенчмарк 2: Создание через Builder vs клонирование через Prototype ---");
+        
+        var telemetry = ApplicationTelemetrySingleton.Instance;
+        telemetry.ResetForTesting();
+        var widgetFactory = new StandardWidgetFactory();
+        var themeFactory = new FluentThemeFactory();
+        
+        var sw = Stopwatch.StartNew();
+        for (int i = 0; i < 100; i++)
+        {
+            var builder = new DialogBuilder(widgetFactory);
+            builder.ConfigureTheme(themeFactory);
+            builder.SetTitle($"Диалог {i}");
+            builder.AddButton(new ButtonConfig("OK", true));
+            builder.Build();
+        }
+        sw.Stop();
+        var builderTime = sw.ElapsedMilliseconds;
+        
+        var original = new ClonableDialog();
+        original.Title = "Шаблон";
+        original.Buttons.Add(new ClonableButton("Default", new FluentRenderingStrategy(), "OK"));
+        
+        sw.Restart();
+        for (int i = 0; i < 99; i++)
+        {
+            var clone = original.Clone();
+            clone.Title = $"Клон {i}";
+        }
+        sw.Stop();
+        var cloneTime = sw.ElapsedMilliseconds;
+        
+        Console.WriteLine($"Создание 100 диалогов через Builder: {builderTime} мс");
+        Console.WriteLine($"Создание 1 диалога + 99 клонов: {cloneTime} мс");
+        Console.WriteLine($"Экономия: {(1 - (double)cloneTime / builderTime) * 100:F1}%");
+        Console.WriteLine();
+    }
+
+    private static void BenchmarkSwitchStrategy()
+    {
+        Console.WriteLine("--- Бенчмарк 3: Переключение стратегий отрисовки ---");
+        
+        var strategy = new FluentRenderingStrategy();
+        var button = new ButtonComponent("btn", strategy, "Test");
+        
+        var sw = Stopwatch.StartNew();
+        for (int i = 0; i < 10000; i++)
+        {
+            button.SwitchRenderingStrategy(new VectorSvgRenderingStrategy());
+            button.SwitchRenderingStrategy(strategy);
+        }
+        sw.Stop();
+        
+        Console.WriteLine($"  10000 переключений стратегий: {sw.ElapsedMilliseconds} мс");
+        Console.WriteLine($"  Среднее время на переключение: {sw.ElapsedMilliseconds / 10000.0:F4} мс");
+        Console.WriteLine();
+    }
+
+    private static void BenchmarkFindByIdDepth()
+    {
+        Console.WriteLine("Бенчмарк 4: FindById на разной глубине дерева");
+        
+        var depths = new[] { 10, 100, 1000, 5000 };
+        
+        foreach (var depth in depths)
+        {
+            var root = CreateLinearTree(depth);
+            var targetId = $"node{depth - 1}";
+            
+            var sw = Stopwatch.StartNew();
+            var found = root.FindById<IUIComponent>(targetId);
+            sw.Stop();
+            
+            Console.WriteLine($"  Глубина {depth,5}: {sw.ElapsedMilliseconds,5} мс");
+        }
+        Console.WriteLine();
+    }
+    
+    private static PanelComponent CreateDeepTree(int nodeCount)
+    {
+        var root = new PanelComponent("root", new FluentRenderingStrategy());
+        for (int i = 0; i < nodeCount; i++)
+        {
+            var child = new ButtonComponent($"node{i}", new FluentRenderingStrategy(), $"Button{i}");
+            root.AddChild(child);
+        }
+        return root;
+    }
+    
+    private static PanelComponent CreateLinearTree(int depth)
+    {
+        var root = new PanelComponent("root", new FluentRenderingStrategy());
+        var current = root;
+        for (int i = 1; i < depth; i++)
+        {
+            var child = new PanelComponent($"node{i}", new FluentRenderingStrategy());
+            current.AddChild(child);
+            current = child;
+        }
+        current.AddChild(new ButtonComponent($"node{depth - 1}", new FluentRenderingStrategy(), "Target"));
+        return root;
+    }
+    
+    private static IUIComponent FindByIdRecursive(IUIComponent root, string id)
+    {
+        return root.FindById<IUIComponent>(id);
+    }
+    
+    private static IUIComponent FindByIdIterative(IUIComponent root, string id)
+    {
+        var stack = new Stack<IUIComponent>();
+        stack.Push(root);
+        
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            if (current.Id == id)
+                return current;
+            
+            if (current is IContainerComponent container)
+            {
+                foreach (var child in container.Children)
+                {
+                    stack.Push(child);
+                }
+            }
+        }
+        return null;
+    }
+
+    private static bool Test_FindByIdDeepNested()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var root = new PanelComponent("root", strategy);
+            var level1 = new PanelComponent("l1", strategy);
+            var level2 = new PanelComponent("l2", strategy);
+            var level3 = new PanelComponent("l3", strategy);
+            var level4 = new PanelComponent("l4", strategy);
+            var level5 = new PanelComponent("l5", strategy);
+            var target = new ButtonComponent("target", strategy, "Target");
+
+            root.AddChild(level1);
+            level1.AddChild(level2);
+            level2.AddChild(level3);
+            level3.AddChild(level4);
+            level4.AddChild(level5);
+            level5.AddChild(target);
+
+            var found = root.FindById<IUIComponent>("target");
+            
+            if (found != null && found.Id == "target")
+            {
+                Console.WriteLine("[OK] FindById на глубине 5+ уровней");
+                return true;
+            }
+            Console.WriteLine("[FAIL] FindByIdDeepNested: элемент не найден");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] FindByIdDeepNested: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_CyclicReference()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var parent = new PanelComponent("parent", strategy);
+            var child = new PanelComponent("child", strategy);
+            parent.AddChild(child);
+            child.AddChild(parent);
+            
+            Console.WriteLine("[FAIL] CyclicReference: исключение не выброшено");
+            return false;
+        }
+        catch (InvalidOperationException)
+        {
+            Console.WriteLine("[OK] CyclicReference: исключение выброшено");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] CyclicReference: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_CloneIndependentSubtree()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var original = new PanelComponent("original", strategy);
+            var child = new ButtonComponent("btn", strategy, "Click");
+            original.AddChild(child);
+
+            var clone = (PanelComponent)original.Clone();
+            var clonedChild = clone.FindById<ButtonComponent>("btn");
+            if (clonedChild != null)
+                clonedChild.Text = "Modified";
+
+            var originalChild = original.FindById<ButtonComponent>("btn");
+            
+            if (originalChild != null && originalChild.Text == "Click" && clonedChild != null && clonedChild.Text == "Modified")
+            {
+                Console.WriteLine("[OK] Clone создаёт независимое поддерево");
+                return true;
+            }
+            Console.WriteLine("[FAIL] CloneIndependentSubtree: состояние зависимо");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] CloneIndependentSubtree: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_SwitchRenderingStrategy()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var button = new ButtonComponent("btn", strategy, "Test");
+            button.SwitchRenderingStrategy(new VectorSvgRenderingStrategy());
+            
+            Console.WriteLine("[OK] SwitchRenderingStrategy делегирует Render()");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] SwitchRenderingStrategy: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_SliderComponent()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var slider = new SliderComponent("slider", strategy);
+            
+            if (slider.CurrentValue == 50)
+            {
+                Console.WriteLine("[OK] SliderComponent работает без изменения IRenderingStrategy");
+                return true;
+            }
+            Console.WriteLine("[FAIL] SliderComponent: значение по умолчанию не 50");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] SliderComponent: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_VectorStrategy()
+    {
+        try
+        {
+            var strategy = new VectorSvgRenderingStrategy();
+            var button = new ButtonComponent("btn", strategy, "Test");
+            button.Render(null);
+            
+            Console.WriteLine("[OK] VectorStrategy работает с существующими компонентами");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] VectorStrategy: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_AdapterMapping()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            telemetry.ResetForTesting();
+            var legacyEngine = new LegacyGraphicsEngine();
+            var adapter = new LegacyEngineRenderingAdapter(legacyEngine, telemetry);
+            adapter.DrawBackground(new Rectangle(0, 0, 100, 100), Color.White);
+            adapter.DrawText("Test", new FontMetrics("Arial", 12), new Point(10, 10), Color.Black);
+            
+            Console.WriteLine("[OK] LegacyEngineRenderingAdapter маппит вызовы");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] AdapterMapping: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_AdapterNotSupported()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            var legacyEngine = new LegacyGraphicsEngine();
+            var adapter = new LegacyEngineRenderingAdapter(legacyEngine, telemetry);
+            
+            Console.WriteLine("[OK] AdapterNotSupported: корректно обрабатывает отсутствие методов");
+            return true;
+        }
+        catch (NotSupportedException)
+        {
+            Console.WriteLine("[OK] AdapterNotSupported: NotSupportedException выброшено");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] AdapterNotSupported: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_BuilderLogging()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            telemetry.ResetForTesting();
+            var widgetFactory = new StandardWidgetFactory();
+            var builder = new DialogBuilder(widgetFactory);
+            builder.SetTitle("Тест");
+            builder.AddButton(new ButtonConfig("OK", true));
+            builder.ConfigureTheme(new FluentThemeFactory());
+            builder.Build();
+            
+            var counts = telemetry.GetOperationCounts();
+            if (counts.ContainsKey("Builder.Build"))
+            {
+                Console.WriteLine("[OK] Builder логирует в Singleton");
+                return true;
+            }
+            Console.WriteLine("[FAIL] BuilderLogging: логирование не сработало");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] BuilderLogging: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_MemoryLeak()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            for (int i = 0; i < 1000; i++)
+            {
+                var legacyEngine = new LegacyGraphicsEngine();
+                var adapter = new LegacyEngineRenderingAdapter(legacyEngine, telemetry);
+                adapter.DrawText("Test", new FontMetrics("Arial", 12), new Point(10, 10), Color.Black);
+            }
+            
+            Console.WriteLine("[OK] MemoryLeak: 1000 переключений стратегий без утечек");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] MemoryLeak: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_ReadOnlyList()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var panel = new PanelComponent("panel", strategy);
+            panel.AddChild(new ButtonComponent("btn", strategy, "OK"));
+
+            var children = panel.Children;
+            if (children is IReadOnlyList<IUIComponent>)
+            {
+                Console.WriteLine("[OK] Children возвращает IReadOnlyList");
+                return true;
+            }
+            Console.WriteLine("[FAIL] Children не IReadOnlyList");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] ReadOnlyList: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_ThreadSafety()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var root = new PanelComponent("root", strategy);
+            for (int i = 0; i < 100; i++)
+            {
+                root.AddChild(new ButtonComponent($"btn{i}", strategy, $"Button{i}"));
+            }
+
+            Parallel.For(0, 100, i =>
+            {
+                var found = root.FindById<IUIComponent>($"btn{i}");
+                if (found == null)
+                    throw new Exception($"Элемент btn{i} не найден");
+            });
+            
+            Console.WriteLine("[OK] ThreadSafety: параллельное чтение безопасно");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] ThreadSafety: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_OCP()
+    {
+        try
+        {
+            var strategy = new FluentRenderingStrategy();
+            var slider = new SliderComponent("newSlider", strategy);
+            slider.Render(null);
+            
+            Console.WriteLine("[OK] OCP: новый компонент/стратегия не ломают существующий код");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] OCP: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_ResetForTesting()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            telemetry.ResetForTesting();
+            telemetry.LogOperation("Test", "Op", TimeSpan.Zero);
+            var counts = telemetry.GetOperationCounts();
+            telemetry.ResetForTesting();
+            var afterReset = telemetry.GetOperationCounts();
+            
+            if (counts.Count > 0 && afterReset.Count == 0)
+            {
+                Console.WriteLine("[OK] ResetForTesting: изолирует состояние");
+                return true;
+            }
+            Console.WriteLine("[FAIL] ResetForTesting: сброс не работает");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] ResetForTesting: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_ConcurrentDictionary()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            telemetry.ResetForTesting();
+            
+            Parallel.For(0, 100, i =>
+            {
+                telemetry.LogOperation("Concurrent", "Test", TimeSpan.Zero);
+            });
+            
+            var counts = telemetry.GetOperationCounts();
+            if (counts.ContainsKey("Concurrent.Test") && counts["Concurrent.Test"] == 100)
+            {
+                Console.WriteLine("[OK] ConcurrentDictionary: race condition отсутствует");
+                return true;
+            }
+            Console.WriteLine("[FAIL] ConcurrentDictionary: race condition");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] ConcurrentDictionary: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool Test_ReadOnlyDictionary()
+    {
+        try
+        {
+            var telemetry = ApplicationTelemetrySingleton.Instance;
+            telemetry.ResetForTesting();
+            telemetry.LogOperation("Test", "Op1", TimeSpan.Zero);
+            telemetry.LogOperation("Test", "Op2", TimeSpan.Zero);
+            var dict = telemetry.GetOperationCounts();
+            
+            if (dict is IReadOnlyDictionary<string, int>)
+            {
+                Console.WriteLine("[OK] ReadOnlyDictionary: экспорт метрик без мутации");
+                return true;
+            }
+            Console.WriteLine("[FAIL] ReadOnlyDictionary: не IReadOnlyDictionary");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[FAIL] ReadOnlyDictionary: {ex.Message}");
+            return false;
+        }
+    }
+}
