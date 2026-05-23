@@ -1,0 +1,29 @@
+using Patterns;
+
+namespace Patterns.Facade;
+
+public enum ThemeType
+{
+    Fluent,
+    Cupertino
+}
+
+public record DialogPreset
+{
+    public string Title { get; init; } = "Диалог";
+    public int Width { get; init; } = 400;
+    public int Height { get; init; } = 300;
+    public ThemeType Theme { get; init; } = ThemeType.Fluent;
+    public bool UseBorderDecorator { get; init; } = false;
+    public bool UseLogDecorator { get; init; } = false;
+    public bool UseCacheDecorator { get; init; } = false;
+    public string[] ButtonTexts { get; init; } = new[] { "OK", "Cancel" };
+    
+    public static DialogPreset Default => new DialogPreset();
+    public static DialogPreset ErrorDialog => new DialogPreset 
+    { 
+        Title = "Ошибка", 
+        UseBorderDecorator = true,
+        ButtonTexts = new[] { "OK" }
+    };
+}

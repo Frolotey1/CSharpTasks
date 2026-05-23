@@ -1,0 +1,11 @@
+using Patterns;
+
+public interface IThemeFactory : IRenderingStrategy
+{
+    IButton CreateButton();
+    ICheckBox CreateCheckBox();
+    IDialogRenderer CreateDialogRenderer();
+    IFontEngine CreateFontEngine();
+    IRenderingStrategy CreateRenderingStrategy();
+    string ThemeName { get; }
+}

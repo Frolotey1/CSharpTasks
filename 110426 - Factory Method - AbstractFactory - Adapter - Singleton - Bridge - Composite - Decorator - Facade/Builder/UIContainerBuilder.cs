@@ -1,0 +1,75 @@
+using Patterns;
+using System;
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class UIContainerBuilder : IContainerBuilder {
+    private string _id;
+    private Point _position;
+    private IRenderingStrategy _strategy;
+    private List<IUIComponent> _children = new List<IUIComponent>();
+    private HashSet<string> _childIds = new HashSet<string>();
+
+    public IContainerBuilder SetId(string id) {
+        _id = id;
+        return this;
+    }
+
+    public IContainerBuilder SetPosition(Point position) {
+        _position = position;
+        return this;
+    }
+
+    public IContainerBuilder SetRenderingStrategy(IRenderingStrategy strategy) {
+        _strategy = strategy;
+        return this;
+    }
+
+    public IContainerBuilder AddChild(IUIComponent child) {
+        if (_childIds.Contains(child.Id))
+            throw new InvalidOperationException($"Дублирование Id: {child.Id}");
+
+        _children.Add(child);
+        _childIds.Add(child.Id);
+        return this;
+    }
+
+    public IContainerComponent Build() {
+        if (string.IsNullOrEmpty(_id))
+            throw new InvalidOperationException("Id не может быть пустым");
+        if (_strategy == null)
+            throw new InvalidOperationException("RenderingStrategy не установлена");
+
+        var panel = new PanelComponent(_id, _strategy);
+        panel.SetPosition(_position);
+
+        foreach (var child in _children) {
+            panel.AddChild(child);
+        }
+
+        var telemetry = ApplicationTelemetrySingleton.Instance;
+        telemetry.LogOperation("Builder", "Build", TimeSpan.Zero, $"Id={_id}, ChildrenCount={_children.Count}");
+
+        return panel;
+    }
+    public IContainerBuilder ConfigureTheme(IThemeFactory theme) {
+	return this;
+    }
+    
+    public IContainerBuilder SetTitle(string title) {
+	return this;
+    }
+    
+    public IContainerBuilder SetIcon(string icon) {
+	return this;
+    }
+    
+    public IContainerBuilder AddButton(ButtonConfig config) {
+	return this;
+    }
+
+    public IContainerBuilder ApplyDecorator(IUIComponent decorator) {
+        return this;
+    }
+}
