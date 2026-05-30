@@ -10,12 +10,14 @@ public class EndToEndIntegrationRunner
     private IThemeFactory _themeFactory;
     private IWidgetFactory _widgetFactory;
     private IContainerBuilder _builder;
+    private IApplicationTelemetry _telemetry; 
 
     public EndToEndIntegrationRunner(IThemeFactory themeFactory, IWidgetFactory widgetFactory, IContainerBuilder builder)
     {
         _themeFactory = themeFactory;
         _widgetFactory = widgetFactory;
         _builder = builder;
+        _telemetry = ApplicationTelemetrySingleton.Instance; 
     }
 
     public void Run()
@@ -133,5 +135,52 @@ public class EndToEndIntegrationRunner
             }
         }
         return null;
+    }
+
+    private void ReplaceRendererWithAdapter()
+    {
+	Console.WriteLine("3. Подмена рендерера через Adapter");
+	
+	try 
+	{
+	    Console.WriteLine("Создание адаптера LegacyEngineRenderingAdapter");
+	    var legacyEngine = new LegacyGraphicsEngine();
+	    IRenderingStrategy adapter = new LegacyEngineRenderingAdapter(legacyEngine, _telemetry);
+        
+	    Console.WriteLine("Демонстрация маппинга вызовов:");
+	    
+	    var rect = new Rectangle(10, 10, 200, 100);
+	    var font = new FontMetrics("Arial", 14);
+	    var point = new Point(20, 50);
+	    
+	    Console.WriteLine("DrawBackground в  RenderTextRaster");
+	    adapter.DrawBackground(rect, Color.White);
+	
+	    Console.WriteLine("DrawBorder в DrawNativeButton");
+	    adapter.DrawBorder(rect, Color.Black, 2);
+        
+	    Console.WriteLine("DrawText в RenderTextRaster");
+	    adapter.DrawText("Текст через адаптер", font, point, Color.Black);
+	    
+	    Console.WriteLine("HitTest в bounds.Contains");
+	    bool hit = adapter.HitTest(rect, new Point(15, 15));
+	    Console.WriteLine($"Результат HitTest: {hit}");
+	
+	    Console.WriteLine("Адаптер успешно интегрирован");
+	    
+	    _telemetry.LogOperation("Adapter", "IntegrationSuccess", TimeSpan.Zero, 
+				"LegacyEngineRenderingAdapter");
+	}
+	catch (NotSupportedException ex)
+	{
+	    Console.WriteLine($"Неподдерживаемая операция: {ex.Message}");
+	    _telemetry.LogOperation("Adapter", "NotSupported", TimeSpan.Zero, ex.Message);
+	}
+	catch (Exception ex)
+	{
+	    Console.WriteLine($"Ошибка при работе адаптера: {ex.Message}");
+	    _telemetry.LogOperation("Adapter", "Error", TimeSpan.Zero, ex.Message);
+	}
+	Console.WriteLine();
     }
 }
