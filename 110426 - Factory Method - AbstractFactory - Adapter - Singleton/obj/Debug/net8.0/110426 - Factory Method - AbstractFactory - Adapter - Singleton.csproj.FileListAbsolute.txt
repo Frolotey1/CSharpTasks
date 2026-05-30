@@ -1,0 +1,15 @@
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.AssemblyInfoInputs.cache
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.AssemblyInfo.cs
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.sourcelink.json
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/bin/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/bin/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.deps.json
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/bin/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.runtimeconfig.json
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/bin/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.dll
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/bin/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.pdb
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.dll
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/refint/110426 - Factory Method - AbstractFactory - Adapter - Singleton.dll
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.pdb
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/110426 - Factory Method - AbstractFactory - Adapter - Singleton.genruntimeconfig.cache
+/home/fr1zb3e/CSharpTasks/110426 - Factory Method - AbstractFactory - Adapter - Singleton/obj/Debug/net8.0/ref/110426 - Factory Method - AbstractFactory - Adapter - Singleton.dll

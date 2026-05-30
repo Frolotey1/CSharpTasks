@@ -34,6 +34,15 @@ public sealed class ApplicationTelemetrySingleton : IApplicationTelemetry {
         return new GlobalUiSettings(_settings.DefaultFont, _settings.DefaultFontSize, _settings.Theme);
     }
 
+    public void LogCurrentMetrics()
+    {
+	Console.WriteLine("\nТекущие метрики Singleton");
+	foreach (var kvp in _operationCounts)
+	{
+	    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
+	}
+    }
+    
     public void ResetForTesting() {
         _operationCounts.Clear();
     }
