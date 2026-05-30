@@ -1,76 +1,10 @@
-using System;
 using Patterns;
-using Patterns.Decorator;
 
-public class Program {
-    public static void Main() {
-        var telemetry = ApplicationTelemetrySingleton.Instance;
-        
-        var facade = new UISystemFacade(new FluentThemeFactory(), new StandardWidgetFactory(), telemetry);
-        
-        Console.WriteLine("Демонстрация Facade\n");
-        
-        Console.WriteLine("1. Создание диалога через Facade");
-        var dialogPreset = new DialogPreset {
-            Title = "Тестовый диалог",
-            ButtonTexts = new[] { "OK", "Cancel", "Apply" }
-        };
-        
-        var dialog = facade.CreateDialog(dialogPreset);
-        Console.WriteLine($"Диалог создан: Id={dialog.Id}, Children={dialog.Children.Count}");
-        
-        Console.WriteLine("\n2.Рендеринг диалога");
-        facade.RenderAllToContext(null);
-        
-        Console.WriteLine("\n3.Переключение темы");
-        facade.ApplyGlobalTheme(ThemeType.Cupertino);
-        facade.RenderAllToContext(null);
-        
-        Console.WriteLine("\n4.Логирование метрик");
-        facade.LogCurrentMetrics();
-        
-        RunBenchmarks(facade);
-        
-        Console.WriteLine("\nЗавершение программы");
-    }
-    
-    private static void RunBenchmarks(UISystemFacade facade) {
-        Console.WriteLine("\nБенчмарк накладных расходов декораторов");
-        
-        var telemetry = ApplicationTelemetrySingleton.Instance;
-        
-        var cleanComponent = new ButtonComponent("btn", new FluentRenderingStrategy(), "Test");
-        var withOneDecorator = new RenderLogDecorator(cleanComponent, telemetry);
-        var withThreeDecorators = new RenderLogDecorator(
-            new BorderDecorator(
-                new RenderLogDecorator(cleanComponent, telemetry), 
-                Color.Black
-            ), 
-            telemetry
-        );
-        
-        var iterations = 1000;
-        
-        var sw = System.Diagnostics.Stopwatch.StartNew();
-        for (int i = 0; i < iterations; i++)
-        {
-            cleanComponent.Render(null);
-        }
-        sw.Stop();
-        Console.WriteLine($"Чистый компонент: {sw.ElapsedMilliseconds} мс");
-        
-        sw.Restart();
-        for (int i = 0; i < iterations; i++) {
-            withOneDecorator.Render(null);
-        }
-        sw.Stop();
-        Console.WriteLine($"С 1 декоратором: {sw.ElapsedMilliseconds} мс");
-        
-        sw.Restart();
-        for (int i = 0; i < iterations; i++) {
-            withThreeDecorators.Render(null);
-        }
-        sw.Stop();
-        Console.WriteLine($"С 3 декораторами: {sw.ElapsedMilliseconds} мс");
+public class Program
+{
+    public static void Main()
+    {
+        var app = new ApplicationEntryPoint();
+        app.Run();
     }
 }

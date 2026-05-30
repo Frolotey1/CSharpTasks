@@ -1,3 +1,5 @@
 namespace Patterns;
 
-public interface IRenderingContext {}
+public interface IRenderingContext { }
+
+public class DefaultRenderingContext : IRenderingContext { }

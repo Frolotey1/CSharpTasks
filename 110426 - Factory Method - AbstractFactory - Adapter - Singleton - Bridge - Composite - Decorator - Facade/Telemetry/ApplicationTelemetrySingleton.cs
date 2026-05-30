@@ -14,7 +14,7 @@ public sealed class ApplicationTelemetrySingleton : IApplicationTelemetry
 
     private ApplicationTelemetrySingleton() { }
 
-    public void LogOperation(string category, string action, TimeSpan duration, string metadata = null)
+    public void LogOperation(string category, string action, TimeSpan duration, string? metadata = null)
     {
         string key = $"{category}.{action}";
         _operationCounts.AddOrUpdate(key, 1, (_, count) => count + 1);
