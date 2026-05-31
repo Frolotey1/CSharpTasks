@@ -4,9 +4,9 @@ namespace Patterns;
 
 public class LegacyButtonAdapter : IWidget
 {
-    private LegacyGraphicsEngine _legacyEngine;
-    private string _text;
-    private IApplicationTelemetry _telemetry;
+    private readonly LegacyGraphicsEngine _legacyEngine;
+    private readonly string _text;
+    private readonly IApplicationTelemetry _telemetry;
 
     public LegacyButtonAdapter(LegacyGraphicsEngine legacyEngine, string text, IApplicationTelemetry telemetry)
     {

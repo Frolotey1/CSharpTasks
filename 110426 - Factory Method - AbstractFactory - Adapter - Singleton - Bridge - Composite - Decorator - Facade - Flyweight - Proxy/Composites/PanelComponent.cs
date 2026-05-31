@@ -1,8 +1,7 @@
-using Patterns;
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
+namespace Patterns;
 
 public class PanelComponent : UIComponentBase, IContainerComponent
 {
@@ -97,14 +96,31 @@ public class PanelComponent : UIComponentBase, IContainerComponent
         }
         return null;
     }
+
     public virtual PanelComponent Clone()
-{
-    var clone = new PanelComponent(Id + "_clone", _renderingStrategy);
-    clone.SetPosition(new Point(BoundingBox.X, BoundingBox.Y));
-    foreach (var child in _children)
     {
-        clone.AddChild(child);
+        var clone = new PanelComponent(Id + "_clone", _renderingStrategy);
+        clone.SetPosition(new Point(BoundingBox.X, BoundingBox.Y));
+        clone.SetStyle(_style); 
+
+        foreach (var child in _children)
+        {
+            if (child is PanelComponent panelChild)
+            {
+                clone.AddChild(panelChild.Clone());
+            }
+            else if (child is ButtonComponent buttonChild)
+            {
+                var clonedButton = new ButtonComponent(buttonChild.Id + "_clone", _renderingStrategy, buttonChild.Text);
+                clonedButton.SetStyle(buttonChild.GetStyle());
+                clone.AddChild(clonedButton);
+            }
+            else
+            {
+                clone.AddChild(child);
+            }
+        }
+
+        return clone;
     }
-    return clone;
-}
 }

@@ -1,12 +1,13 @@
-using Patterns;
 using System;
-using System.Collections.Generic;
+
+namespace Patterns;
 
 public abstract class UIComponentBase : IUIComponent
 {
     public string Id { get; protected set; }
     public Rectangle BoundingBox { get; protected set; }
     protected IRenderingStrategy _renderingStrategy;
+    protected IUIStyleFlyweight? _style;
 
     protected UIComponentBase(string id, IRenderingStrategy strategy)
     {
@@ -35,10 +36,12 @@ public abstract class UIComponentBase : IUIComponent
 
     public abstract T FindById<T>(string id) where T : class, IUIComponent;
 
-    protected IUIStyleFlyweight? _style;
-    
-    public void SetStyle(IUIStyleFlyweight style) {
+    public IUIStyleFlyweight? GetStyle() => _style;
+
+    public void SetStyle(IUIStyleFlyweight style)
+    {
         _style = style;
+        var telemetry = ApplicationTelemetrySingleton.Instance;
+        telemetry.LogOperation("Flyweight", "SetStyle", TimeSpan.Zero, $"ComponentId={Id},StyleId={style?.StyleId}");
     }
-    
 }

@@ -1,4 +1,4 @@
-using Patterns;
+namespace Patterns;
 
 public class ButtonComponent : UIComponentBase, ILeafComponent
 {
