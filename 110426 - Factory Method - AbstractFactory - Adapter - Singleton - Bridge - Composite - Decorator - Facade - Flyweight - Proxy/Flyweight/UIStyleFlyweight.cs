@@ -1,7 +1,7 @@
 using System;
 namespace Patterns;
 
-public record UIStyleFlyweight : IUIStyleFlyweight {
+public record class UIStyleFlyweight : IUIStyleFlyweight {
     public Guid StyleId { get; init; } = Guid.NewGuid();
     public FontMetrics Font { get; init; }
     public ColorPalette Palette { get; init; }
