@@ -77,7 +77,7 @@ public class FullLifecycleCapstoneRunner
             Console.WriteLine("Applied GridLayoutStrategy");
         }
 
-        Console.WriteLine("\n6. ");
+        Console.WriteLine("\n6. Реализация жизненного цикла");
         var lifecycle = new StandardComponentLifecycle(root);
         var uiContext = new UIContext(new DefaultRenderingContext(), _telemetry, root);
         lifecycle.ExecuteLifecycle(uiContext);
