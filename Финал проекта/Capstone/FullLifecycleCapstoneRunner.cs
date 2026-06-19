@@ -47,10 +47,19 @@ public class FullLifecycleCapstoneRunner
         }
 
         Console.WriteLine("\n3. Executing DSL скрипт");
-        string script = "SELECT <Button> WHERE Id='dialog_btn_OK_0' -> EXECUTE ApplyTheme('Cupertino') -> SetPosition(50,100)";
-        var context = new UIInterpreterContext(_facade, _commandManager, _telemetry);
-        var expression = _parser.Parse(script);
-        expression.Interpret(context);
+        try
+        {
+            string script = "SELECT <Button> -> EXECUTE ApplyTheme('Cupertino')";
+            var context = new UIInterpreterContext(_facade, _commandManager, _telemetry);
+            var expression = _parser.Parse(script);
+            expression.Interpret(context);
+            Console.WriteLine("DSL выполнен успешно!");
+        }
+        catch (ParseException ex)
+        {
+            Console.WriteLine($"[WARNING] Ошибка парсинга DSL: {ex.Message}");
+            Console.WriteLine($"Position: {ex.Position}, Expected: {ex.ExpectedToken}");
+        }
 
         Console.WriteLine("\n4. Демонстрация паттерна State");
         var statefulBtn = new StatefulComponent("demo_btn", new FluentRenderingStrategy(), _telemetry);
