@@ -47,7 +47,7 @@ public class FullLifecycleCapstoneRunner
         }
 
         Console.WriteLine("\n3. Executing DSL скрипт");
-        string script = "SELECT <Button> WHERE Id=dialog_btn_OK_0 -> EXECUTE ApplyTheme('Cupertino') -> SetPosition(50,100)";
+        string script = "SELECT <Button> WHERE Id='dialog_btn_OK_0' -> EXECUTE ApplyTheme('Cupertino') -> SetPosition(50,100)";
         var context = new UIInterpreterContext(_facade, _commandManager, _telemetry);
         var expression = _parser.Parse(script);
         expression.Interpret(context);
