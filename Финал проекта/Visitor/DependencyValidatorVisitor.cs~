@@ -1,0 +1,89 @@
+// Visitor/DependencyValidatorVisitor.cs
+using System.Collections.Generic;
+
+namespace Patterns.Visitor;
+
+public record ValidationViolation(string Severity, string Message, string ComponentId);
+
+public class DependencyValidatorVisitor : IUIComponentVisitor
+{
+    private readonly List<ValidationViolation> _violations = new();
+    private readonly HashSet<string> _visitedIds = new();
+
+    public IReadOnlyList<ValidationViolation> GetViolations() => _violations.AsReadOnly();
+
+    public void Visit(ButtonComponent button)
+    {
+        CheckDuplicateId(button.Id);
+    }
+
+    public void Visit(PanelComponent panel)
+    {
+        CheckDuplicateId(panel.Id);
+        CheckForCyclicReference(panel);
+    }
+
+    public void Visit(LabelComponent label)
+    {
+        CheckDuplicateId(label.Id);
+    }
+
+    public void Visit(SliderComponent slider)
+    {
+        CheckDuplicateId(slider.Id);
+        if (slider.MinValue >= slider.MaxValue)
+        {
+            _violations.Add(new ValidationViolation("Error", $"Slider {slider.Id} has invalid range", slider.Id));
+        }
+    }
+
+    public void Visit(VirtualComponentProxy proxy)
+    {
+        CheckDuplicateId(proxy.Id);
+    }
+
+    public void Visit(ProtectionComponentProxy proxy)
+    {
+        CheckDuplicateId(proxy.Id);
+    }
+
+    private void CheckDuplicateId(string id)
+    {
+        if (_visitedIds.Contains(id))
+        {
+            _violations.Add(new ValidationViolation("Warning", $"Duplicate component ID: {id}", id));
+        }
+        _visitedIds.Add(id);
+    }
+
+    private void CheckForCyclicReference(PanelComponent panel)
+    {
+        var visited = new HashSet<IUIComponent>();
+        var stack = new Stack<IUIComponent>();
+        DetectCycle(panel, visited, stack);
+    }
+
+    private void DetectCycle(IUIComponent current, HashSet<IUIComponent> visited, Stack<IUIComponent> stack)
+    {
+        if (stack.Contains(current))
+        {
+            _violations.Add(new ValidationViolation("Error", $"Cyclic reference detected involving {current.Id}", current.Id));
+            return;
+        }
+
+        if (visited.Contains(current)) return;
+
+        visited.Add(current);
+        stack.Push(current);
+
+        if (current is IContainerComponent container)
+        {
+            foreach (var child in container.Children)
+            {
+                DetectCycle(child, visited, stack);
+            }
+        }
+
+        stack.Pop();
+    }
+}

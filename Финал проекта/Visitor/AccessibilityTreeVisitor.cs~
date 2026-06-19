@@ -1,0 +1,46 @@
+// Visitor/AccessibilityTreeVisitor.cs
+using System.Collections.Generic;
+
+namespace Patterns.Visitor;
+
+public record AccessibilityNode(string Id, string Role, string Label, bool IsVisible, bool IsEnabled);
+
+public class AccessibilityTreeVisitor : IUIComponentVisitor
+{
+    private readonly List<AccessibilityNode> _nodes = new();
+
+    public IReadOnlyList<AccessibilityNode> GetTree() => _nodes.AsReadOnly();
+
+    public void Visit(ButtonComponent button)
+    {
+        _nodes.Add(new AccessibilityNode(button.Id, "button", button.Text, true, true));
+    }
+
+    public void Visit(PanelComponent panel)
+    {
+        _nodes.Add(new AccessibilityNode(panel.Id, "group", panel.Id, true, true));
+    }
+
+    public void Visit(LabelComponent label)
+    {
+        _nodes.Add(new AccessibilityNode(label.Id, "label", label.Text, true, true));
+    }
+
+    public void Visit(SliderComponent slider)
+    {
+        _nodes.Add(new AccessibilityNode(slider.Id, "slider", slider.CurrentValue.ToString(), true, true));
+    }
+
+    public void Visit(VirtualComponentProxy proxy)
+    {
+        if (proxy.IsMaterialized)
+        {
+            _nodes.Add(new AccessibilityNode(proxy.Id, "proxy", proxy.Id, true, true));
+        }
+    }
+
+    public void Visit(ProtectionComponentProxy proxy)
+    {
+        _nodes.Add(new AccessibilityNode(proxy.Id, "protected", proxy.Id, true, true));
+    }
+}

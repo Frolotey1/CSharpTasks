@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns.Iterators;
+
+public class DepthFirstIterator : IUIComponentIterator
+{
+    private readonly IContainerComponent _root;
+    private Stack<IEnumerator<IUIComponent>> _stack = null;
+    private IUIComponent _current = null;
+    private bool _started;
+
+    public DepthFirstIterator(IContainerComponent root)
+    {
+        _root = root ?? throw new ArgumentNullException(nameof(root));
+        Reset();
+    }
+
+    public bool MoveNext()
+    {
+        if (!_started)
+        {
+            _started = true;
+            var rootEnumerator = GetChildrenEnumerator(_root);
+            if (rootEnumerator != null)
+            {
+                _stack.Push(rootEnumerator);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        while (_stack.Count > 0)
+        {
+            var currentEnumerator = _stack.Peek();
+            if (currentEnumerator.MoveNext())
+            {
+                _current = currentEnumerator.Current;
+                
+                if (_current is IContainerComponent container && container.Children.Count > 0)
+                {
+                    var childEnumerator = GetChildrenEnumerator(container);
+                    if (childEnumerator != null)
+                    {
+                        _stack.Push(childEnumerator);
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                currentEnumerator.Dispose();
+                _stack.Pop();
+            }
+        }
+
+        _current = null;
+        return false;
+    }
+
+    private IEnumerator<IUIComponent> GetChildrenEnumerator(IContainerComponent container)
+    {
+        if (container.Children.Count == 0) return null;
+        return new List<IUIComponent>(container.Children).GetEnumerator();
+    }
+
+    public void Reset()
+    {
+        if (_stack != null)
+        {
+            foreach (var enumerator in _stack)
+            {
+                enumerator.Dispose();
+            }
+            _stack.Clear();
+        }
+        _stack = new Stack<IEnumerator<IUIComponent>>();
+        _current = null;
+        _started = false;
+    }
+
+    public IUIComponent Current
+    {
+        get
+        {
+            if (!_started || _current == null)
+                throw new InvalidOperationException("Enumeration not started or already finished");
+            return _current;
+        }
+    }
+
+    object System.Collections.IEnumerator.Current => Current;
+
+    public void Dispose()
+    {
+        if (_stack != null)
+        {
+            foreach (var enumerator in _stack)
+            {
+                enumerator.Dispose();
+            }
+            _stack = null;
+        }
+    }
+}

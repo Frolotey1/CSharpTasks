@@ -1,0 +1,11 @@
+// Strategy/ILayoutStrategy.cs
+using System.Collections.Generic;
+
+namespace Patterns.Strategy;
+
+public interface ILayoutStrategy
+{
+    IReadOnlyDictionary<IUIComponent, Rectangle> CalculateBounds(
+        IContainerComponent container,
+        LayoutContext context);
+}

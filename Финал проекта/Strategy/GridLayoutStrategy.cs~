@@ -1,0 +1,59 @@
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class GridLayoutStrategy : ILayoutStrategy
+{
+    private readonly int _rows;
+    private readonly int _columns;
+    private readonly int[] _rowWeights;
+    private readonly int[] _columnWeights;
+
+    public GridLayoutStrategy(int rows, int columns, int[] rowWeights = null, int[] columnWeights = null)
+    {
+        _rows = rows;
+        _columns = columns;
+        _rowWeights = rowWeights ?? new int[rows];
+        _columnWeights = columnWeights ?? new int[columns];
+        
+        for (int i = 0; i < _rowWeights.Length; i++)
+            if (_rowWeights[i] == 0) _rowWeights[i] = 1;
+        for (int i = 0; i < _columnWeights.Length; i++)
+            if (_columnWeights[i] == 0) _columnWeights[i] = 1;
+    }
+
+    public IReadOnlyDictionary<IUIComponent, Rectangle> CalculateBounds(IContainerComponent container, LayoutContext context)
+    {
+        var result = new Dictionary<IUIComponent, Rectangle>();
+        var containerRect = container.BoundingBox;
+        
+        int totalRowWeight = 0;
+        foreach (var w in _rowWeights) totalRowWeight += w;
+        
+        int totalColWeight = 0;
+        foreach (var w in _columnWeights) totalColWeight += w;
+        
+        float availableHeight = containerRect.Height - context.Padding * 2;
+        float availableWidth = containerRect.Width - context.Padding * 2;
+        
+        float rowHeight = availableHeight / totalRowWeight;
+        float colWidth = availableWidth / totalColWeight;
+        
+        int childIndex = 0;
+        for (int row = 0; row < _rows && childIndex < container.Children.Count; row++)
+        {
+            for (int col = 0; col < _columns && childIndex < container.Children.Count; col++)
+            {
+                var child = container.Children[childIndex];
+                float y = containerRect.Y + context.Padding + row * rowHeight * _rowWeights[row];
+                float x = containerRect.X + context.Padding + col * colWidth * _columnWeights[col];
+                
+                var bounds = new Rectangle((int)x, (int)y, (int)(colWidth * _columnWeights[col]), (int)(rowHeight * _rowWeights[row]));
+                result[child] = bounds;
+                childIndex++;
+            }
+        }
+        
+        return result;
+    }
+}

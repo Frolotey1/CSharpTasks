@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public interface IApplicationTelemetry 
+{
+    void LogOperation(string category, string action, TimeSpan duration, string metadata);
+    void LogError(string category, string error);
+    IReadOnlyDictionary<string, int> GetOperationCounts();
+    GlobalUiSettings GetCurrentSettings();
+    void ResetForTesting();
+    void LogCurrentMetrics();
+}

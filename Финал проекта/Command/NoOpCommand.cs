@@ -1,0 +1,8 @@
+namespace Patterns;
+
+public class NoOpCommand : IUICommand
+{
+    public string Description => "NoOp";
+    public void Execute() { }
+    public void Undo() { }
+}

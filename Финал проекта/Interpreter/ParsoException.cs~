@@ -1,0 +1,17 @@
+// Interpreter/ParseException.cs
+using System;
+
+namespace Patterns.Interpreter;
+
+public class ParseException : Exception
+{
+    public int Position { get; }
+    public string ExpectedToken { get; }
+
+    public ParseException(string message, int position, string expectedToken = null) 
+        : base(message)
+    {
+        Position = position;
+        ExpectedToken = expectedToken;
+    }
+}

@@ -1,0 +1,18 @@
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class FreeFormLayoutStrategy : ILayoutStrategy
+{
+    public IReadOnlyDictionary<IUIComponent, Rectangle> CalculateBounds(IContainerComponent container, LayoutContext context)
+    {
+        var result = new Dictionary<IUIComponent, Rectangle>();
+        
+        foreach (var child in container.Children)
+        {
+            result[child] = child.BoundingBox;
+        }
+        
+        return result;
+    }
+}

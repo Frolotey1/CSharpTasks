@@ -1,0 +1,5 @@
+using System;
+
+namespace Patterns;
+
+public record UIStateChangeData(string StateType, object OldValue, object NewValue, DateTime Timestamp);

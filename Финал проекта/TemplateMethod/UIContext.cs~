@@ -1,0 +1,8 @@
+// TemplateMethod/UIContext.cs
+namespace Patterns.TemplateMethod;
+
+public record UIContext(
+    IRenderingContext RenderingContext,
+    IApplicationTelemetry Telemetry,
+    IContainerComponent Root
+);

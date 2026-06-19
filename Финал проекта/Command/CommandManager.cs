@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns;
+
+public class CommandManager
+{
+    private readonly Stack<IUICommand> _undoStack = new();
+    private readonly Stack<IUICommand> _redoStack = new();
+    private readonly IApplicationTelemetry _telemetry;
+
+    public CommandManager(IApplicationTelemetry telemetry)
+    {
+        _telemetry = telemetry;
+    }
+
+    public void ExecuteCommand(IUICommand command)
+    {
+        command.Execute();
+        _undoStack.Push(command);
+        _redoStack.Clear();
+        _telemetry.LogOperation("Command", "Execute", TimeSpan.Zero, command.Description);
+    }
+
+    public void Undo()
+    {
+        if (_undoStack.Count == 0) return;
+        var command = _undoStack.Pop();
+        command.Undo();
+        _redoStack.Push(command);
+        _telemetry.LogOperation("Command", "Undo", TimeSpan.Zero, command.Description);
+    }
+
+    public void Redo()
+    {
+        if (_redoStack.Count == 0) return;
+        var command = _redoStack.Pop();
+        command.Execute();
+        _undoStack.Push(command);
+        _telemetry.LogOperation("Command", "Redo", TimeSpan.Zero, command.Description);
+    }
+
+    public void Clear()
+    {
+        _undoStack.Clear();
+        _redoStack.Clear();
+    }
+}

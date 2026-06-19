@@ -1,0 +1,21 @@
+namespace Patterns;
+
+public class LockComponentCommand : IUICommand
+{
+    private readonly IUIComponent _target;
+
+    public string Description => $"Lock() on {_target.Id}";
+
+    public LockComponentCommand(IUIComponent target)
+    {
+        _target = target;
+    }
+
+    public void Execute()
+    {
+        if (_target is ProtectionComponentProxy proxy)
+            proxy.LockComponent();
+    }
+
+    public void Undo() { }
+}

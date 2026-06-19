@@ -1,0 +1,8 @@
+namespace Patterns.Observer;
+
+public interface ISubject
+{
+    void Attach(IUIStateObserver observer);
+    void Detach(IUIStateObserver observer);
+    void Notify(UIStateChangeData data);
+}

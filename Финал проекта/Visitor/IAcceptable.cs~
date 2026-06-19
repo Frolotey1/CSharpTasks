@@ -1,0 +1,7 @@
+// Visitor/IAcceptable.cs
+namespace Patterns.Visitor;
+
+public interface IAcceptable
+{
+    void Accept(IUIComponentVisitor visitor);
+}

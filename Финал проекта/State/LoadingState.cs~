@@ -1,0 +1,28 @@
+using System;
+
+namespace Patterns;
+
+public class LoadingState : IComponentState
+{
+    public string StateName => "Loading";
+
+    public void Enter(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id} entered Loading state - input blocked");
+    }
+
+    public void Exit(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id} exited Loading state");
+    }
+
+    public void HandleClick(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id} click ignored while loading");
+    }
+
+    public void HandleRender(IUIComponent context, IRenderingContext ctx)
+    {
+        Console.WriteLine($"[State] {context?.Id} rendering loading indicator");
+    }
+}

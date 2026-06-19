@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns.Iterators;
+
+public class FilteredIterator : IUIComponentIterator
+{
+    private readonly IUIComponentIterator _innerIterator;
+    private readonly Func<IUIComponent, bool> _predicate;
+    private IUIComponent _current;
+    private bool _hasCurrent;
+
+    public FilteredIterator(IUIComponentIterator innerIterator, Func<IUIComponent, bool> predicate)
+    {
+        _innerIterator = innerIterator ?? throw new ArgumentNullException(nameof(innerIterator));
+        _predicate = predicate ?? throw new ArgumentNullException(nameof(predicate));
+        _hasCurrent = false;
+    }
+
+    public bool MoveNext()
+    {
+        while (_innerIterator.MoveNext())
+        {
+            var candidate = _innerIterator.Current;
+            if (_predicate(candidate))
+            {
+                _current = candidate;
+                _hasCurrent = true;
+                return true;
+            }
+        }
+        _current = null;
+        _hasCurrent = false;
+        return false;
+    }
+
+    public void Reset()
+    {
+        _innerIterator.Reset();
+        _current = null;
+        _hasCurrent = false;
+    }
+
+    public IUIComponent Current
+    {
+        get
+        {
+            if (!_hasCurrent || _current == null)
+                throw new InvalidOperationException("Enumeration not started or already finished");
+            return _current;
+        }
+    }
+
+    object System.Collections.IEnumerator.Current => Current;
+
+    public void Dispose()
+    {
+        _innerIterator.Dispose();
+    }
+}

@@ -1,0 +1,33 @@
+using System;
+
+namespace Patterns;
+
+public class ApplyThemeCommand : IUICommand
+{
+    private readonly IUIComponent _target;
+    private readonly string _themeName;
+    private string _previousStyleId;
+
+    public string Description => $"ApplyTheme('{_themeName}') to {_target.Id}";
+
+    public ApplyThemeCommand(IUIComponent target, string themeName)
+    {
+        _target = target;
+        _themeName = themeName;
+    }
+
+    public void Execute()
+    {
+        if (_target is UIComponentBase uiBase)
+        {
+            _previousStyleId = uiBase.GetStyle()?.StyleId.ToString() ?? "none";
+            var flyweightFactory = new FlyweightFactory();
+            var newStyle = flyweightFactory.GetFlyweight(new StyleKey("Arial", 12, _themeName));
+            uiBase.SetStyle(newStyle);
+        }
+    }
+
+    public void Undo()
+    {
+    }
+}

@@ -1,0 +1,28 @@
+using System;
+
+namespace Patterns;
+
+public class ErrorState : IComponentState
+{
+    public string StateName => "Error";
+
+    public void Enter(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id}");
+    }
+
+    public void Exit(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id}");
+    }
+
+    public void HandleClick(IUIComponent context)
+    {
+        Console.WriteLine($"[State] {context?.Id}");
+    }
+
+    public void HandleRender(IUIComponent context, IRenderingContext ctx)
+    {
+        Console.WriteLine($"[State] {context?.Id}");
+    }
+}

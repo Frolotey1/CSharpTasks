@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+
+namespace Patterns.Interpreter;
+
+public record TypeSelectorExpression(string ComponentType) : IExpression
+{
+    public void Interpret(UIInterpreterContext context)
+    {
+        context.Telemetry.LogOperation("Interpreter", "TypeSelector", TimeSpan.Zero, $"Type={ComponentType}");
+    }
+}
+
+public record PredicateExpression(string Property, string Operator, string Value) : IExpression
+{
+    public bool Evaluate(IUIComponent component)
+    {
+        return Property switch
+        {
+            "Visible" => bool.TryParse(Value, out bool visible) && visible,
+            "Id" => component.Id == Value,
+            "Enabled" => bool.TryParse(Value, out bool enabled) && enabled,
+            _ => true
+        };
+    }
+
+    public void Interpret(UIInterpreterContext context)
+    {
+        context.Telemetry.LogOperation("Interpreter", "Predicate", TimeSpan.Zero, $"{Property}{Operator}{Value}");
+    }
+}
+
+public record ActionExpression(string ActionName, string[] Arguments) : IExpression
+{
+    public void Interpret(UIInterpreterContext context)
+    {
+        context.Telemetry.LogOperation("Interpreter", "Action", TimeSpan.Zero, ActionName);
+    }
+
+    public IUICommand CreateCommand(IUIComponent target)
+    {
+        return ActionName switch
+        {
+            "ApplyTheme" => new ApplyThemeCommand(target, Arguments.Length > 0 ? Arguments[0] : "Fluent"),
+            "SetPosition" when Arguments.Length >= 2 => 
+                new SetPositionCommand(target, int.Parse(Arguments[0]), int.Parse(Arguments[1])),
+            "Lock" => new LockComponentCommand(target),
+            _ => new NoOpCommand()
+        };
+    }
+}
+
+public record SelectExpression(TypeSelectorExpression TypeSelector, PredicateExpression Predicate) : IExpression
+{
+    public void Interpret(UIInterpreterContext context)
+    {
+        TypeSelector.Interpret(context);
+        Predicate.Interpret(context);
+    }
+
+    public IEnumerable<IUIComponent> Execute(UIInterpreterContext context, IContainerComponent root)
+    {
+        var iterator = context.IteratorFactory.CreateFilteredIterator(root, Predicate.Evaluate);
+        using (iterator)
+        {
+            while (iterator.MoveNext())
+            {
+                yield return iterator.Current;
+            }
+        }
+    }
+}
+
+public record ExecuteExpression(IEnumerable<IUIComponent> Targets, ActionExpression Action) : IExpression
+{
+    public void Interpret(UIInterpreterContext context)
+    {
+        Action.Interpret(context);
+        var commands = new List<IUICommand>();
+        
+        foreach (var target in Targets)
+        {
+            var cmd = Action.CreateCommand(target);
+            commands.Add(cmd);
+            context.CommandManager.ExecuteCommand(cmd);
+        }
+        
+        context.Telemetry.LogOperation("Interpreter", "ExecuteBatch", TimeSpan.Zero, $"TargetCount={commands.Count}");
+    }
+}
+
+public record ChainExpression(IExpression[] Expressions) : IExpression
+{
+    public void Interpret(UIInterpreterContext context)
+    {
+        foreach (var expr in Expressions)
+        {
+            expr.Interpret(context);
+        }
+    }
+}

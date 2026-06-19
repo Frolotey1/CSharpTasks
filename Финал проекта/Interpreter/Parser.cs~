@@ -1,0 +1,23 @@
+namespace Patterns;
+
+public class Parser
+{
+    private List<string> _tokens;
+    private int _tokenIndex;
+
+    public IExpression Parse(string script)
+    {
+        _tokens = Tokenize(script);
+        return ParseStatement();
+    }
+
+    private IExpression ParseStatement()
+    {
+        return Peek()?.ToUpperInvariant() switch
+        {
+            "SELECT" => ParseQuery(),
+            "EXECUTE" => ParseCommandChain(),
+            _ => throw new ParseException($"Expected SELECT or EXECUTE", _position)
+        };
+    }
+}
