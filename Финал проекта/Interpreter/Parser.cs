@@ -12,17 +12,24 @@ public class Parser
     private List<string> _tokens;
     private int _tokenIndex;
 
-    public Patterns.IExpression Parse(string script)
+    public IExpression Parse(string script)
     {
         _script = script;
         _position = 0;
         _tokens = Tokenize(script);
         _tokenIndex = 0;
+
+        Console.WriteLine("Токены");
+        for (int i = 0; i < _tokens.Count; i++)
+        {
+            Console.WriteLine($"[{i}] = '{_tokens[i]}'");
+        }
+        Console.WriteLine("Конец токенов");
         
         var expr = ParseStatement();
         
         if (_tokenIndex < _tokens.Count)
-            throw new ParseException("Unexpected tokens after end of statement", _position, null);
+            throw new ParseException($"Unexpected tokens after end of statement: {string.Join(" ", _tokens.Skip(_tokenIndex))}", _position, null);
         
         return expr;
     }
@@ -30,7 +37,7 @@ public class Parser
     private List<string> Tokenize(string script)
     {
         var tokens = new List<string>();
-        var regex = new Regex(@"(\bSELECT\b|\bWHERE\b|\bEXECUTE\b|\b->\b|<[^>]+>|\w+|[=!<>]+|'[^']*'|\([^)]*\))", RegexOptions.IgnoreCase);
+        var regex = new Regex(@"(\bSELECT\b|\bWHERE\b|\bEXECUTE\b|\b->\b|<[^>]+>|\w+|[=!<>]+|'[^']*'|""[^""]*""|\([^)]*\))", RegexOptions.IgnoreCase);
         var matches = regex.Matches(script);
         
         foreach (Match match in matches)
@@ -60,7 +67,7 @@ public class Parser
         Consume();
     }
 
-    private Patterns.IExpression ParseStatement()
+    private IExpression ParseStatement()
     {
         var token = Peek()?.ToUpperInvariant();
         
@@ -72,7 +79,7 @@ public class Parser
         };
     }
 
-    private Patterns.IExpression ParseQuery()
+    private IExpression ParseQuery()
     {
         Expect("SELECT");
         var typeSelector = ParseTypeSelector();
@@ -85,11 +92,12 @@ public class Parser
         }
         
         var selectExpr = new SelectExpression(typeSelector, predicate);
-        
-        if (Peek()?.ToUpperInvariant() == "->" || Peek()?.ToUpperInvariant() == "EXECUTE")
+
+        var next = Peek()?.ToUpperInvariant();
+        if (next == "->" || next == "EXECUTE")
         {
             var commandChain = ParseCommandChain();
-            return new ChainExpression(new Patterns.IExpression[] { selectExpr, commandChain });
+            return new ChainExpression(new IExpression[] { selectExpr, commandChain });
         }
         
         return selectExpr;
@@ -111,16 +119,24 @@ public class Parser
         var op = Consume();
         var value = Consume();
         
-        if (value.StartsWith("'") && value.EndsWith("'"))
+        if ((value.StartsWith("'") && value.EndsWith("'")) || 
+            (value.StartsWith("\"") && value.EndsWith("\"")))
+        {
             value = value.Substring(1, value.Length - 2);
+        }
         
         return new PredicateExpression(property, op, value);
     }
 
-    private Patterns.IExpression ParseCommandChain()
+    private IExpression ParseCommandChain()
     {
+        if (Peek()?.ToUpperInvariant() == "->")
+        {
+            Consume();
+        }
+        
         Expect("EXECUTE");
-        var actions = new List<Patterns.IExpression>();
+        var actions = new List<IExpression>();
         
         actions.Add(ParseAction());
         
@@ -144,8 +160,13 @@ public class Parser
             var argsToken = Consume();
             if (argsToken != ")")
             {
-                arguments = argsToken.Split(',').Select(a => a.Trim().Trim('\'')).ToArray();
-                Expect(")");
+                arguments = argsToken.Split(',').Select(a => a.Trim().Trim('\'').Trim('"')).ToArray();
+                if (Peek() == ")")
+                    Consume(); 
+            }
+            else
+            {
+                Consume();
             }
         }
         
