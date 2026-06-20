@@ -34,7 +34,7 @@ public class FullLifecycleCapstoneRunner
     {
         Console.WriteLine("Полный жизненный цикл тестов Capstone\n");
 
-        Console.WriteLine("1. Building UI tree...");
+        Console.WriteLine("1. Построение UI дерева");
         var preset = DialogPreset.Default with { Title = "Capstone Demo", UseBorderDecorator = true };
         var root = _facade.CreateDialog(preset);
         _telemetry.LogOperation("Capstone", "BuildTree", TimeSpan.Zero, $"RootId={root?.Id}");
