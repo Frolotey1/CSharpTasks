@@ -46,7 +46,7 @@ public class FullLifecycleCapstoneRunner
             _mementoManager.SaveCheckpoint("initial", memento);
         }
 
-        Console.WriteLine("\n3. Executing DSL скрипт");
+        Console.WriteLine("\n3.DSL скрипт");
         try
         {
             string script = "SELECT <Button> -> EXECUTE ApplyTheme('Cupertino')";
