@@ -1,0 +1,14 @@
+/home/fr1zb3e/031026 - Threads/bin/Debug/net10.0/031026 - Threads
+/home/fr1zb3e/031026 - Threads/bin/Debug/net10.0/031026 - Threads.deps.json
+/home/fr1zb3e/031026 - Threads/bin/Debug/net10.0/031026 - Threads.runtimeconfig.json
+/home/fr1zb3e/031026 - Threads/bin/Debug/net10.0/031026 - Threads.dll
+/home/fr1zb3e/031026 - Threads/bin/Debug/net10.0/031026 - Threads.pdb
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.GeneratedMSBuildEditorConfig.editorconfig
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.AssemblyInfoInputs.cache
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.AssemblyInfo.cs
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.csproj.CoreCompileInputs.cache
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.dll
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/refint/031026 - Threads.dll
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.pdb
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/031026 - Threads.genruntimeconfig.cache
+/home/fr1zb3e/031026 - Threads/obj/Debug/net10.0/ref/031026 - Threads.dll
