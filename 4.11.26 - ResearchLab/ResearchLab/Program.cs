@@ -1,4 +1,4 @@
-﻿using ResearchLab;
+using ResearchLab;
 using System.Diagnostics.Metrics;
 using System.Diagnostics;
 
@@ -53,10 +53,7 @@ public static class Program
         for (int i = 1; i <= CellCount; i++)
             cells.Add(Cell.CreateRandom(i, rnd));
 
-        string resultAutoCancel = !string.IsNullOrEmpty(AutoCancelMs.ToString())
-                                    ? AutoCancelMs.ToString() : "выключена";
-
-        EventLog.Write($"Количество партии ячеек: {cells.Count}\nСлотов зарядки={ChargerSlots}\nАвтоотмена={resultAutoCancel}");
+        EventLog.Write($"Количество партии ячеек: {cells.Count}\nСлотов зарядки={ChargerSlots}");
 
         using var session = new StationSession(ChargerSlots, token);
         using var done = new CountdownEvent(cells.Count);
@@ -84,14 +81,15 @@ public static class Program
         }
         else if (!allDone)
         {
-            EventLog.Write("ОШИБКА: превышен лимит ожидания завершения работы (штатный режим)");
+            EventLog.Write("Превышен лимит ожидания завершения работы");
         }
 
         sw.Stop();
         EventLog.Write("обработка партии завершена");
 
         ThreadPool.GetAvailableThreads(out int workerEnd, out int ioEnd);
-        EventLog.Write($"пул потоков после: доступно worker={workerEnd}, io={ioEnd}");
+        EventLog.Write($"Пул свободных рабочих потоков после: {workerEnd}");
+        EventLog.Write($"Пул свободных I/O потоков после: {ioEnd}");
 
         Console.WriteLine("Итоговая статистика: ");
         PrintStatistics(session.Counters, cells.Count, sw.Elapsed, workerStart, out _);
