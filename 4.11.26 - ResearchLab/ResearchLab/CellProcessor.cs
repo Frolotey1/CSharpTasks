@@ -2,6 +2,7 @@
 
 public static class CellProcessor
 {
+    private static long _sink;
     public static void Process(Cell cell, StationSession stationSession, CountdownEvent done)
     {
         OwnCounter counters = stationSession.Counters;
@@ -31,9 +32,9 @@ public static class CellProcessor
                 }
             }
 
-            EventLog.Write(cell.Id,"Диагностика завершена",status);
+            Volatile.Write(ref _sink, accumulator);
 
-            if (accumulator == long.MinValue) Console.WriteLine(accumulator);
+            EventLog.Write(cell.Id,"Диагностика завершена",status);
 
             status = CellStatus.WaitingForCharger;
             EventLog.Write(cell.Id, "Ожидание слота зарядки", status);
